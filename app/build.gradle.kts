@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -58,6 +59,17 @@ dependencies {
     //RecyclerView
     implementation(libs.recyclerview)
     implementation(libs.glide)
+
+    //FireBase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation (libs.firebase.firestore.ktx)
+    implementation (libs.firebase.auth.ktx)
+
+    implementation (libs.firebase.storage)
+
+
+
 
 
 

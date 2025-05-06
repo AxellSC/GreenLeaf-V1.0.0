@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +21,7 @@
             android:name=".view.RegistroAdminActivity"
             android:exported="false" />
         <activity
-            android:name=".view.FormActivity"
+            android:name=".view.StartActivity"
             android:exported="false" />
         <activity
             android:name=".view.CatalogoActivity"
@@ -25,7 +30,7 @@
             android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.StartActivity"
+            android:name=".view.FormActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
