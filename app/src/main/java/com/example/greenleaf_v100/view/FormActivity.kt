@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -38,6 +39,8 @@ class FormActivity : AppCompatActivity() {
         binding = ActivityFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupSpinners()
+
         binding.btnSeleccionarImagen.setOnClickListener {
             pickImage.launch("image/*")
         }
@@ -46,19 +49,46 @@ class FormActivity : AppCompatActivity() {
             val nombre = binding.etNombre.text.toString()
             val descripcion = binding.etDescripcion.text.toString()
             val precio = binding.etPrecio.text.toString()
+            val spnTipo = binding.spnTipo.selectedItem.toString()
+            val spnEstancia = binding.spnEstancia.selectedItem.toString()
+            val spnRiego = binding.spnRiego.selectedItem.toString()
 
-            if (imageUri == null || nombre.isBlank() || descripcion.isBlank() || precio.isBlank()) {
+            if (imageUri == null || nombre.isBlank() || descripcion.isBlank() || precio.isBlank())  {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            if (spnTipo == "Tipo:" || spnEstancia == "Estancia:" || spnRiego == "Riego:") {
+                Toast.makeText(this, "Seleccione todas las opciones", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             subirImagenAFirebase(imageUri!!) { urlImagen ->
-                guardarPlantaEnFirestore(nombre, descripcion, precio, urlImagen)
+                guardarPlantaEnFirestore(nombre, descripcion, precio, urlImagen, spnTipo, spnEstancia, spnRiego)
             }
         }
 
 
     }
+
+    private fun setupSpinners() {
+        val spnTipo = listOf("Tipo:", "Sol", "Sombra", "Sombra Parcial")
+        val adapter1 = ArrayAdapter(this, android.R.layout.simple_spinner_item, spnTipo)
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spnTipo.adapter = adapter1
+
+        val spnEstancia = listOf("Estancia:", "Interior", "Exterior")
+        val adapter2 = ArrayAdapter(this, android.R.layout.simple_spinner_item, spnEstancia)
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spnEstancia.adapter = adapter2
+
+        val spnRiego = listOf("Riego:", "Alto", "Frecuente", "Bajo")
+        val adapter3 = ArrayAdapter(this, android.R.layout.simple_spinner_item, spnRiego)
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spnRiego.adapter = adapter3
+    }
+
+
 
     private fun subirImagenAFirebase(uri: Uri, callback: (String) -> Unit) {
         val storageRef = Firebase.storage.reference
@@ -76,24 +106,39 @@ class FormActivity : AppCompatActivity() {
             }
     }
 
-    private fun guardarPlantaEnFirestore(nombre: String, descripcion: String, precio: String, urlImagen: String) {
-        val db = Firebase.firestore
+    private fun guardarPlantaEnFirestore(
+        nombre: String,
+        descripcion: String,
+        precio: String,
+        urlImagen: String,
+        spnTipo: String,
+        spnEstancia: String,
+        spnRiego: String)
+    {
+        val nuevoDocumento = Firebase.firestore.collection("plantas").document()
+
         val planta = ModelPlanta(
-            nombre = nombre,
-            descripcion = descripcion,
-            precio = precio,
-            fotoUrl = urlImagen
+            id = nuevoDocumento.id,
+            nombre,
+            descripcion,
+            precio,
+            urlImagen,
+            spnTipo,       // categoria
+            spnEstancia,   // tipoCuidado
+            spnRiego       // nivelDificultad
+
         )
 
-        db.collection("plantas")
-            .add(planta)
+        // 3. Guardamos usando .set() en la referencia creada
+        nuevoDocumento.set(planta)
             .addOnSuccessListener {
-                Toast.makeText(this, "Planta guardada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "✅ Planta guardada con ID: ${nuevoDocumento.id}", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, CatalogoActivity::class.java))
                 finish()
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error al guardar planta", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+
     }
 }
