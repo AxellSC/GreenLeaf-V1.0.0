@@ -68,6 +68,11 @@ class FormActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnSiguiente.setOnClickListener{
+            val intent = Intent(this, CatalogoActivity::class.java)
+            startActivity(intent)
+        }
+
 
     }
 

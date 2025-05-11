@@ -46,6 +46,11 @@ class LoginActivity : AppCompatActivity() {
                 binding.etPassword.error = result.errorMessage
             }
         }
+
+        binding.btnEntrar.setOnClickListener{
+            val intent = Intent(this, CatalogoActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 }
