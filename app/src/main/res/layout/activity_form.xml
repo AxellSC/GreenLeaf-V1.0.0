@@ -20,7 +20,7 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textColor="#000000"
-        android:textColorHint="#838282"
+        android:textColorHint="#BCBCBC"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +37,7 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textColor="#000000"
-        android:textColorHint="#838282"
+        android:textColorHint="#BCBCBC"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +54,7 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textColor="#000000"
-        android:textColorHint="#838282"
+        android:textColorHint="#BCBCBC"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,7 +69,7 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textColor="#000000"
-        android:textColorHint="#838282"
+        android:textColorHint="#BCBCBC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/etNombre"
@@ -119,32 +119,53 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
-        android:id="@+id/spnTipo"
-        android:layout_width="316dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etConsejo" />
-
-    <Spinner
         android:id="@+id/spnEstancia"
         android:layout_width="316dp"
         android:layout_height="41dp"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@color/green"
+        android:backgroundTintMode="add"
+        android:foregroundTint="#040404"
+        android:outlineAmbientShadowColor="#000000"
+        android:spinnerMode="dialog"
+        android:textAlignment="viewStart"
+        android:textDirection="inherit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.825"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnTipo" />
+
+    <Spinner
+        android:id="@+id/spnTipo"
+        android:layout_width="316dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/green"
+        android:backgroundTintMode="add"
+        android:foregroundTint="#040404"
+        android:outlineAmbientShadowColor="#000000"
+        android:spinnerMode="dialog"
+        android:textAlignment="viewStart"
+        android:textDirection="inherit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.825"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etConsejo" />
 
     <Spinner
         android:id="@+id/spnRiego"
         android:layout_width="316dp"
         android:layout_height="41dp"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@color/green"
+        android:backgroundTintMode="add"
+        android:foregroundTint="#040404"
+        android:outlineAmbientShadowColor="#000000"
+        android:spinnerMode="dialog"
+        android:textAlignment="viewStart"
+        android:textDirection="inherit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.825"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnEstancia" />
 
