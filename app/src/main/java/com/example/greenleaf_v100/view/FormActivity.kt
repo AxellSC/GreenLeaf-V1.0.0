@@ -49,11 +49,13 @@ class FormActivity : AppCompatActivity() {
             val nombre = binding.etNombre.text.toString()
             val descripcion = binding.etDescripcion.text.toString()
             val precio = binding.etPrecio.text.toString()
+            val consejo = binding.etConsejo.text.toString()
             val spnTipo = binding.spnTipo.selectedItem.toString()
             val spnEstancia = binding.spnEstancia.selectedItem.toString()
             val spnRiego = binding.spnRiego.selectedItem.toString()
 
-            if (imageUri == null || nombre.isBlank() || descripcion.isBlank() || precio.isBlank())  {
+
+            if (imageUri == null || nombre.isBlank() || descripcion.isBlank() || precio.isBlank() || consejo.isBlank() )  {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -64,7 +66,7 @@ class FormActivity : AppCompatActivity() {
             }
 
             subirImagenAFirebase(imageUri!!) { urlImagen ->
-                guardarPlantaEnFirestore(nombre, descripcion, precio, urlImagen, spnTipo, spnEstancia, spnRiego)
+                guardarPlantaEnFirestore(nombre, descripcion, precio, urlImagen, spnTipo, spnEstancia, spnRiego, consejo)
             }
         }
 
@@ -118,7 +120,8 @@ class FormActivity : AppCompatActivity() {
         urlImagen: String,
         spnTipo: String,
         spnEstancia: String,
-        spnRiego: String)
+        spnRiego: String,
+        consejo: String)
     {
         val nuevoDocumento = Firebase.firestore.collection("plantas").document()
 
@@ -130,7 +133,8 @@ class FormActivity : AppCompatActivity() {
             urlImagen,
             spnTipo,       // categoria
             spnEstancia,   // tipoCuidado
-            spnRiego       // nivelDificultad
+            spnRiego,       // nivelDificultad
+            consejo
 
         )
 

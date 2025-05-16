@@ -10,5 +10,6 @@ data class ModelPlanta (
     val fotoUrl: String = "",
     val tipo: String = "",         // spnTipo
     val estancia: String = "",    // spnEstancia
-    val riego: String = ""       // spnRiego
+    val riego: String = "",       // spnRiego
+    val consejo: String = "",
 )

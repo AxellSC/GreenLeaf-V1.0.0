@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutFormulario"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,8 +11,8 @@
 
     <EditText
         android:id="@+id/etNombre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="44dp"
         android:hint="Nombre"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,21 +22,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="68dp"
         android:hint="Descripción"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etNombre" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etConsejo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="124dp"
+        android:hint="Consejo/Tip de cuidado"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etPrecio"
-        android:layout_width="match_parent"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:hint="Precio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etDescripcion" />
+        app:layout_constraintStart_toEndOf="@+id/etNombre"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSeleccionarImagen"
@@ -50,8 +60,8 @@
 
     <ImageView
         android:id="@+id/ivPreview"
-        android:layout_width="189dp"
-        android:layout_height="139dp"
+        android:layout_width="220dp"
+        android:layout_height="146dp"
         android:layout_marginBottom="12dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/btnAgregar"
@@ -84,11 +94,11 @@
         android:id="@+id/spnTipo"
         android:layout_width="316dp"
         android:layout_height="41dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPrecio" />
+        app:layout_constraintTop_toBottomOf="@+id/etConsejo" />
 
     <Spinner
         android:id="@+id/spnEstancia"
