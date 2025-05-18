@@ -3,7 +3,8 @@ package com.example.greenleaf_v100.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 
 // Identifica el tipo de usuario una vez logueado
@@ -26,14 +27,16 @@ class LoginViewModel : ViewModel() {
 
     fun login(email: String, password: String) {
         if (email.isBlank() || password.isBlank()) {
-            _loginResult.value = LoginResult(false, errorMessage = "Correo y contraseña son obligatorios")
+            _loginResult.value =
+                LoginResult(false, errorMessage = "Correo y contraseña son obligatorios")
             return
         }
 
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener { authResult ->
                 val uid = authResult.user?.uid ?: run {
-                    _loginResult.value = LoginResult(false, errorMessage = "UID inválido")
+                    _loginResult.value =
+                        LoginResult(false, errorMessage = "UID inválido")
                     return@addOnSuccessListener
                 }
 
@@ -41,41 +44,47 @@ class LoginViewModel : ViewModel() {
                 db.collection("admins").document(uid).get()
                     .addOnSuccessListener { docAdmin ->
                         if (docAdmin.exists()) {
-                            // Usuario admin
                             _loginResult.value = LoginResult(
-                                isSuccess   = true,
-                                userType    = UserType.ADMIN,
+                                true,
+                                userType = UserType.ADMIN,
                                 profileData = docAdmin.data
                             )
                         } else {
-                            // Si no es admin, revisamos clientes
+                            // Luego revisamos clientes
                             db.collection("clientes").document(uid).get()
                                 .addOnSuccessListener { docCliente ->
                                     if (docCliente.exists()) {
                                         _loginResult.value = LoginResult(
-                                            isSuccess   = true,
-                                            userType    = UserType.CLIENTE,
+                                            true,
+                                            userType = UserType.CLIENTE,
                                             profileData = docCliente.data
-                                        )
-                                    } else {
-                                        // No está en ninguna colección
-                                        _loginResult.value = LoginResult(
-                                            false,
-                                            errorMessage = "Usuario no encontrado en admins ni clientes"
                                         )
                                     }
                                 }
-                                .addOnFailureListener { e ->
-                                    _loginResult.value = LoginResult(false, errorMessage = e.localizedMessage)
-                                }
                         }
-                    }
-                    .addOnFailureListener { e ->
-                        _loginResult.value = LoginResult(false, errorMessage = e.localizedMessage)
                     }
             }
             .addOnFailureListener { e ->
-                _loginResult.value = LoginResult(false, errorMessage = e.localizedMessage)
+                // Mapear errores de FirebaseAuth a mensajes en español
+                val msg = when (e) {
+                    is FirebaseAuthInvalidUserException ->
+                        when (e.errorCode) {
+                            "ERROR_USER_NOT_FOUND"   -> "No existe una cuenta con este correo."
+                            "ERROR_USER_DISABLED"    -> "La cuenta ha sido desactivada."
+                            else                     -> "Usuario inválido."
+                        }
+                    is FirebaseAuthInvalidCredentialsException ->
+                        when (e.errorCode) {
+                            "ERROR_WRONG_PASSWORD"   -> "Contraseña incorrecta."
+                            "ERROR_INVALID_EMAIL"    -> "Formato de correo inválido."
+                            else                     -> "El correo o contraseña es incorrecto."
+                        }
+                    is FirebaseNetworkException ->
+                        "Error de red. Verifica tu conexión."
+                    else ->
+                        "Error de autenticación. Intenta de nuevo."
+                }
+                _loginResult.value = LoginResult(false, errorMessage = msg)
             }
     }
 }

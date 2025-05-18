@@ -14,11 +14,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Campos de login existentes -->
+            <!-- Email -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Correo electrónico">
+                android:hint="Correo electrónico"
+                app:errorEnabled="true"
+                android:paddingBottom="8dp">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
@@ -26,11 +30,18 @@
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Contraseña -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Contraseña"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                app:errorEnabled="true"
+                app:endIconMode="password_toggle"
+                app:errorIconDrawable="@null"
+                android:paddingBottom="16dp">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
@@ -38,6 +49,7 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Entrar -->
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
@@ -45,7 +57,7 @@
                 android:text="Entrar"
                 android:layout_marginTop="16dp" />
 
-            <!-- Nuevo botón para registrar administradores -->
+            <!-- Registrar Administrador -->
             <Button
                 android:id="@+id/btnRegisterAdmin"
                 android:layout_width="match_parent"
@@ -53,7 +65,7 @@
                 android:text="Registrar administrador"
                 android:layout_marginTop="8dp" />
 
-            <!-- Link para registro de clientes -->
+            <!-- Registro Cliente -->
             <TextView
                 android:id="@+id/tvRegisterClient"
                 android:layout_width="wrap_content"

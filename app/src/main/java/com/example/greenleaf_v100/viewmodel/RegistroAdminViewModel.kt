@@ -19,7 +19,7 @@ class RegistroAdminViewModel : ViewModel() {
     private val _registroResult = MutableLiveData<RegistroResult>()
     val registroResult: LiveData<RegistroResult> = _registroResult
 
-    fun register(
+    fun registerAdmin(
         nombre: String,
         paterno: String,
         materno: String,

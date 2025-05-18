@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <!-- Si usas DataBinding, aquí puedes declarar tu ViewModel -->
+        <!-- Puedes enlazar tu ViewModel aquí si utilizas DataBinding -->
     </data>
 
     <ScrollView
@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Título -->
             <TextView
                 android:id="@+id/tvTitleAdmin"
                 android:layout_width="wrap_content"
@@ -28,91 +27,113 @@
 
             <!-- Nombre -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilFirstNameAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nombre"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                android:paddingBottom="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFirstNameAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido paterno -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLastNamePatAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Apellido paterno"
                 android:layout_marginTop="8dp"
-                app:errorEnabled="true">
+                android:hint="Apellido paterno"
+                app:errorEnabled="true"
+                android:paddingBottom="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastNamePatAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido materno -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLastNameMatAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Apellido materno"
                 android:layout_marginTop="8dp"
-                app:errorEnabled="true">
+                android:hint="Apellido materno"
+                app:errorEnabled="true"
+                android:paddingBottom="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastNameMatAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Correo electrónico -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmailAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Correo electrónico"
                 android:layout_marginTop="16dp"
-                app:errorEnabled="true">
+                android:hint="Correo electrónico"
+                app:errorEnabled="true"
+                android:paddingBottom="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmailAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Contraseña -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPasswordAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Contraseña"
                 android:layout_marginTop="8dp"
-                app:errorEnabled="true">
+                android:hint="Contraseña"
+                app:errorEnabled="true"
+                app:endIconMode="password_toggle"
+                app:errorIconDrawable="@null"
+                android:paddingBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPasswordAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Confirmar contraseña -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilConfirmPasswordAdmin"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="Confirmar contraseña"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:endIconMode="password_toggle"
+                app:errorIconDrawable="@null"
+                android:paddingBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etConfirmPasswordAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Botón Registrar -->
@@ -120,10 +141,10 @@
                 android:id="@+id/btnRegisterAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Registrar" />
+                android:text="Registrar"
+                android:layout_marginTop="24dp" />
 
-            <!-- Botón Volver al Login -->
+            <!-- Volver al Login -->
             <Button
                 android:id="@+id/btnBackToLoginAdmin"
                 android:layout_width="match_parent"
