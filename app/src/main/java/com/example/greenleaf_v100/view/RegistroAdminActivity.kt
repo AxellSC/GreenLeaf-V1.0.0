@@ -2,15 +2,10 @@ package com.example.greenleaf_v100.view
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ActivityRegistroAdminBinding
 import com.example.greenleaf_v100.viewmodel.RegistroAdminViewModel
-import kotlin.reflect.KProperty
 
 class RegistroAdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegistroAdminBinding
@@ -21,35 +16,37 @@ class RegistroAdminActivity : AppCompatActivity() {
         binding = ActivityRegistroAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnBackToLogin.setOnClickListener {
+        // Registro...
+        binding.btnRegisterAdmin.setOnClickListener {
+            val fn    = binding.etFirstNameAdmin.text.toString().trim()
+            val lp    = binding.etLastNamePatAdmin.text.toString().trim()
+            val lm    = binding.etLastNameMatAdmin.text.toString().trim()
+            val email = binding.etEmailAdmin.text.toString().trim()
+            val pw    = binding.etPasswordAdmin.text.toString().trim()
+            val pw2   = binding.etConfirmPasswordAdmin.text.toString().trim()
+
+            if (pw != pw2) {
+                binding.etConfirmPasswordAdmin.error = "No coincide"
+                return@setOnClickListener
+            }
+            viewModel.registerAdmin(fn, lp, lm, email, pw)
+        }
+
+        // Volver al login
+        binding.btnBackToLoginAdmin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
-        binding.btnRegister.setOnClickListener {
-            val fn    = binding.etFirstName.text.toString().trim()
-            val lp    = binding.etLastNamePat.text.toString().trim()
-            val lm    = binding.etLastNameMat.text.toString().trim()
-            val email = binding.etEmailReg.text.toString().trim()
-            val pw    = binding.etPassword.text.toString().trim()
-            val pw2   = binding.etConfirmPassword.text.toString().trim()
 
-            if (pw != pw2) {
-                binding.etConfirmPassword.error = "No coincide"
-                return@setOnClickListener
-            }
-
-            viewModel.register(fn, lp, lm, email, pw)
-        }
-
+        // Observa resultado...
         viewModel.registroResult.observe(this) { result ->
             if (result.isSuccess) {
+                // después de crear admin, volvemos al login
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             } else {
-                binding.etPassword.error = result.errorMessage
+                binding.etPasswordAdmin.error = result.errorMessage
             }
         }
     }
 }
-
-
