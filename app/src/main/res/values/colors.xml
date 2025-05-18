@@ -5,4 +5,5 @@
     <color name="grayBackground">#EBEBEB</color>
     <color name="grayDarkBackground">#C7B3B3B3</color>
     <color name="green">#4CAF50</color>
+    <color name="purple">#8f558f</color>
 </resources>

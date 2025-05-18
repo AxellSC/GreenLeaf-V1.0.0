@@ -43,8 +43,16 @@ class CatalogoActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         adapter = PlantasAdapter(plantasList) { planta ->
-            val intent = Intent(this, DetallePlantaActivity::class.java).apply {
+            val intent = Intent(this, PresentacionPlantaActivity::class.java).apply {
                 putExtra("PLANTA_ID", planta.id)
+                putExtra("NOMBRE", planta.nombre)
+                putExtra("DESCRIPCION",planta.descripcion)
+                putExtra("FOTO_URL", planta.fotoUrl)
+                putExtra("TIPO", planta.tipo)
+                putExtra("ESTANCIA", planta.estancia)
+                putExtra("RIEGO", planta.riego)
+                putExtra("CONSEJO",planta.consejo)
+
             }
             startActivity(intent)
         }
