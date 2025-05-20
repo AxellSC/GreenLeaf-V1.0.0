@@ -2,15 +2,20 @@ package com.example.greenleaf_v100.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.greenleaf_v100.databinding.ActivityLoginBinding
 import com.example.greenleaf_v100.viewmodel.LoginViewModel
 import com.example.greenleaf_v100.viewmodel.UserType
+import java.io.Serializable
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModels()
+
+    // Aquí guardamos el tipo tras el login
+    private var tipoUsuario: UserType? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,13 +62,23 @@ class LoginActivity : AppCompatActivity() {
                 return@observe
             }
 
+            // Guardamos el tipo y mostramos mensaje
+            tipoUsuario = result.userType
+            val mensaje = when (tipoUsuario) {
+                UserType.ADMIN   -> "El usuario es un administrador"
+                UserType.CLIENTE -> "El usuario es un cliente"
+                else             -> "Tipo de usuario desconocido"
+            }
+            Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show()
+
             // Limpiar errores
             binding.tilPassword.error = null
 
-            when (result.userType) {
+            // Navegar según tipo
+            when (tipoUsuario) {
                 UserType.ADMIN -> {
                     val intent = Intent(this, FormActivity::class.java)
-                    intent.putExtra("PROFILE", result.profileData as java.io.Serializable)
+                    intent.putExtra("PROFILE", result.profileData as Serializable)
                     startActivity(intent)
                     finish()
                 }
