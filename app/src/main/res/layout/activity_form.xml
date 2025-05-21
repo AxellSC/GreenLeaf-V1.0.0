@@ -9,29 +9,26 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etNombre"
-        android:layout_width="130dp"
-        android:layout_height="44dp"
-        android:background="@drawable/input_bg"
-        android:hint="Nombre"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#BCBCBC"
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregue una nueva planta"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.563"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etDescripcion"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="152dp"
         android:background="@drawable/input_bg"
-        android:hint="Descripción"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
@@ -40,15 +37,24 @@
         android:textColorHint="#BCBCBC"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="Descripcion"
+        app:layout_constraintBottom_toTopOf="@+id/etDescripcion"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/etConsejo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="276dp"
         android:background="@drawable/input_bg"
-        android:hint="Consejo/Tip de cuidado"
+
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
@@ -58,12 +64,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="12dp"
+        android:text="Consejo/Tip de cuidado"
+        app:layout_constraintBottom_toTopOf="@+id/etConsejo"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <EditText
         android:id="@+id/etPrecio"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_width="67dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="64dp"
         android:background="@drawable/input_bg"
-        android:hint="Precio"
+
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
@@ -75,44 +91,84 @@
         app:layout_constraintStart_toEndOf="@+id/etNombre"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Precio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.903"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="$"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
+
+        app:layout_constraintStart_toEndOf="@+id/etNombre"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etNombre"
+        android:layout_width="184dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/input_bg"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#BCBCBC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:text="Nombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSeleccionarImagen"
         android:layout_width="188dp"
         android:layout_height="54dp"
-        android:layout_marginBottom="16dp"
         android:text="Seleccionar Imagen"
-        app:layout_constraintBottom_toTopOf="@+id/ivPreview"
+
+        app:layout_constraintBottom_toBottomOf="@+id/ivPreview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent" />
+
 
     <ImageView
         android:id="@+id/ivPreview"
         android:layout_width="220dp"
         android:layout_height="146dp"
-        android:layout_marginBottom="12dp"
-        android:scaleType="centerCrop"
+        android:layout_marginBottom="4dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/btnAgregar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnAgregar"
         android:layout_width="260dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="4dp"
         android:text="Agregar Planta"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnSiguiente"
-        android:layout_width="260dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="12dp"
-        android:text="Siguiente"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -122,7 +178,7 @@
         android:id="@+id/spnEstancia"
         android:layout_width="316dp"
         android:layout_height="41dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="@color/green"
         android:backgroundTintMode="add"
         android:foregroundTint="#040404"
@@ -131,7 +187,7 @@
         android:textAlignment="viewStart"
         android:textDirection="inherit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.825"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnTipo" />
 
@@ -139,23 +195,6 @@
         android:id="@+id/spnTipo"
         android:layout_width="316dp"
         android:layout_height="41dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/green"
-        android:backgroundTintMode="add"
-        android:foregroundTint="#040404"
-        android:outlineAmbientShadowColor="#000000"
-        android:spinnerMode="dialog"
-        android:textAlignment="viewStart"
-        android:textDirection="inherit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.825"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etConsejo" />
-
-    <Spinner
-        android:id="@+id/spnRiego"
-        android:layout_width="316dp"
-        android:layout_height="41dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/green"
         android:backgroundTintMode="add"
@@ -165,20 +204,25 @@
         android:textAlignment="viewStart"
         android:textDirection="inherit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.825"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etConsejo" />
+
+    <Spinner
+        android:id="@+id/spnRiego"
+        android:layout_width="316dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/green"
+        android:backgroundTintMode="add"
+        android:foregroundTint="#040404"
+        android:outlineAmbientShadowColor="#000000"
+        android:spinnerMode="dialog"
+        android:textAlignment="viewStart"
+        android:textDirection="inherit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnEstancia" />
-
-    <TextView
-        android:id="@+id/tvPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="$"
-        android:textSize="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/etDescripcion"
-        app:layout_constraintEnd_toStartOf="@+id/etPrecio"
-        app:layout_constraintHorizontal_bias="0.941"
-        app:layout_constraintStart_toEndOf="@+id/etNombre" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
