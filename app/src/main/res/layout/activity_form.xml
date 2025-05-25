@@ -109,7 +109,7 @@
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintHorizontal_bias="0.469"
 
         app:layout_constraintStart_toEndOf="@+id/etNombre"
         app:layout_constraintTop_toTopOf="parent" />

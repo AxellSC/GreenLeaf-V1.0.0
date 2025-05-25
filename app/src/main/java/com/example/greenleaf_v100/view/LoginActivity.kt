@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
             // Navegar según tipo
             when (tipoUsuario) {
                 UserType.ADMIN -> {
-                    val intent = Intent(this, FormActivity::class.java)
+                    val intent = Intent(this, CatalogoActivity::class.java)
                     intent.putExtra("PROFILE", result.profileData as Serializable)
                     startActivity(intent)
                     finish()
