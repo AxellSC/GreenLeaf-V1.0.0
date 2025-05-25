@@ -52,6 +52,28 @@ class CatalogoActivity : AppCompatActivity() {
             val intent = Intent(this, FormActivity::class.java)
             startActivity(intent)
         }
+
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_inicio -> {
+                    // Ya estás en esta Activity
+                    true
+                }
+                R.id.nav_carrito -> {
+                    startActivity(Intent(this, CatalogoActivity::class.java))
+                    true
+                }
+                R.id.nav_perfil -> {
+                    startActivity(Intent(this, PerfilActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // Marcar el ítem actual seleccionado (por ejemplo, si estás en InicioActivity)
+        binding.bottomNavigationView.selectedItemId = R.id.nav_inicio
+
     }
 
     private fun setupRecyclerView() {
