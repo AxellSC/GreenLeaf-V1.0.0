@@ -19,6 +19,7 @@ import com.example.greenleaf_v100.databinding.ActivityCatalogoBinding
 import com.example.greenleaf_v100.model.ModelPlanta
 import com.example.greenleaf_v100.model.PlantasAdapter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.example.greenleaf_v100.viewmodel.UserType
 
 class CatalogoActivity : AppCompatActivity() {
 
@@ -31,6 +32,18 @@ class CatalogoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCatalogoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val tipoUsuarioStr = intent.getStringExtra("TIPO_USUARIO")
+        val tipoUsuario = tipoUsuarioStr?.let { UserType.valueOf(it) }
+
+        if (tipoUsuario == UserType.ADMIN) {
+            // Mostrar opciones de admin
+        } else if (tipoUsuario == UserType.CLIENTE) {
+            // Mostrar opciones para cliente
+            binding.btnAgregarPlanta.visibility = View.INVISIBLE
+
+        } else {
+            // Tipo desconocido o no recibido
+        }
 
         setupRecyclerView()
         cargarPlantas()

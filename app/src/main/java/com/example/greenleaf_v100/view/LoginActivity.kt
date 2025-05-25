@@ -78,12 +78,14 @@ class LoginActivity : AppCompatActivity() {
             when (tipoUsuario) {
                 UserType.ADMIN -> {
                     val intent = Intent(this, CatalogoActivity::class.java)
-                    intent.putExtra("PROFILE", result.profileData as Serializable)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
                     startActivity(intent)
                     finish()
                 }
                 UserType.CLIENTE -> {
-                    startActivity(Intent(this, CatalogoActivity::class.java))
+                    val intent = Intent(this, CatalogoActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name) // "CLIENTE"
+                    startActivity(intent)
                     finish()
                 }
                 else -> {
