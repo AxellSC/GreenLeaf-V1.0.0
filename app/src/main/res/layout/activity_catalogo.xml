@@ -11,10 +11,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="190dp"
-        android:layout_marginTop="4dp"
-        android:background="@color/black"
+        app:cardBackgroundColor="@color/greenA"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -30,24 +29,78 @@
             android:text="planta no encontrada"
             android:textSize="20dp"
             android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/ivPlantaC"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:foregroundGravity="center"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tvNombrePC"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="180dp"
+            android:layout_marginTop="25dp"
+            android:layout_height="wrap_content"
+            android:text="Planta"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvDescripcionC"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="180dp"
+            android:layout_marginTop="75dp"
+            android:layout_height="wrap_content"
+            android:text="Descripcion"
+            android:textColor="@color/grayBackground"
+            android:textSize="20sp"
+            android:textStyle="normal">
+        </TextView>
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="170dp"
+            android:layout_marginTop="135dp"
+            android:text="¡Consiguelo aquí!"
+            android:textColor="@color/green"
+            android:textSize="27sp"
+            android:textStyle="bold">
+
+        </TextView>
+
     </androidx.cardview.widget.CardView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAgregarPlanta"
-        android:layout_width="148dp"
-        android:layout_height="59dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/green"
+        android:layout_marginStart="4dp"
+        android:textSize="10sp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_agregar"
         android:text="Agregar Planta"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.939"
+        app:layout_constraintHorizontal_bias="0.953"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="412dp"
         android:layout_height="410dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -56,11 +109,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:itemIconTint="@color/green"
-        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/greenA"
+        app:itemTextColor="@color/grayText"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu1"
-        tools:layout_editor_absoluteX="-4dp" />
+        tools:layout_editor_absoluteX="-4dp"
+        android:background="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

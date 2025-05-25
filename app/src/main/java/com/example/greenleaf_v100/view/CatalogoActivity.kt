@@ -72,7 +72,7 @@ class CatalogoActivity : AppCompatActivity() {
         }
 
         // Marcar el ítem actual seleccionado (por ejemplo, si estás en InicioActivity)
-        binding.bottomNavigationView.selectedItemId = R.id.nav_inicio
+       // binding.bottomNavigationView.selectedItemId = R.id.nav_inicio
 
     }
 
