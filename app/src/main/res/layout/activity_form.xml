@@ -3,228 +3,234 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutFormulario"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
+    android:padding="16dp"
+    android:background="@color/white"
+    tools:context=".view.FormActivity">
 
     <TextView
+        android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregue una nueva planta"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.563"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/etDescripcion"
+    <!-- Paso 1 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/formStep1"
+        android:layout_width="0dp"
+        android:visibility="visible"
+        android:layout_height="580dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textColor="@color/blackText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_bg"
+
+            android:textColor="#000000"
+            android:textColorHint="#BCBCBC"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <EditText
+            android:id="@+id/etDescripcion"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="4dp"
+
+            android:background="@drawable/input_bg"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#BCBCBC"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcion" />
+
+        <TextView
+            android:id="@+id/tvDescripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Descripción"
+            android:textColor="@color/blackText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPrecio" />
+
+        <EditText
+            android:id="@+id/etPrecio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/input_bg"
+            android:hint="$0.00"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#BCBCBC"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPrecio" />
+
+        <TextView
+            android:id="@+id/tvPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Precio"
+            android:textColor="@color/blackText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etNombre" />
+
+        <EditText
+            android:id="@+id/etConsejo"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="4dp"
+
+            android:background="@drawable/input_bg"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#BCBCBC"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvConsejo" />
+
+        <TextView
+            android:id="@+id/tvConsejo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="Consejo/Tip de cuidado"
+            android:textColor="@color/blackText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etDescripcion" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSiguiente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="Siguiente"
+            android:background="@drawable/button_round2"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etConsejo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Paso 2 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/formStep2"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="152dp"
-        android:background="@drawable/input_bg"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#BCBCBC"
+        android:layout_height="580dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="8dp"
-        android:text="Descripcion"
-        app:layout_constraintBottom_toTopOf="@+id/etDescripcion"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Spinner
+            android:id="@+id/spnTipo"
+            android:textColor="@color/blackText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etConsejo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="276dp"
-        android:background="@drawable/input_bg"
+        <Spinner
+            android:id="@+id/spnEstancia"
+            android:textColor="@color/blackText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:backgroundTint="@color/green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spnTipo" />
 
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#BCBCBC"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Spinner
+            android:id="@+id/spnRiego"
+            android:textColor="@color/blackText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:backgroundTint="@color/green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spnEstancia" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="12dp"
-        android:text="Consejo/Tip de cuidado"
-        app:layout_constraintBottom_toTopOf="@+id/etConsejo"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/ivPreview"
+            android:layout_width="220dp"
+            android:layout_height="146dp"
+            android:layout_marginTop="28dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spnRiego" />
 
-    <EditText
-        android:id="@+id/etPrecio"
-        android:layout_width="67dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="64dp"
-        android:background="@drawable/input_bg"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSeleccionarImagen"
+            android:layout_width="143dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="8dp"
+            android:text="Seleccionar Imagen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivPreview" />
 
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#BCBCBC"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/etNombre"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Volver"
+            android:background="@drawable/button_round2"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/btnAgregar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Precio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.903"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="$"
-        android:textColor="@color/black"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
-
-        app:layout_constraintStart_toEndOf="@+id/etNombre"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/etNombre"
-        android:layout_width="184dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:background="@drawable/input_bg"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#BCBCBC"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        android:text="Nombre"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSeleccionarImagen"
-        android:layout_width="188dp"
-        android:layout_height="54dp"
-        android:text="Seleccionar Imagen"
-
-        app:layout_constraintBottom_toBottomOf="@+id/ivPreview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <ImageView
-        android:id="@+id/ivPreview"
-        android:layout_width="220dp"
-        android:layout_height="146dp"
-        android:layout_marginBottom="4dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/btnAgregar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnAgregar"
-        android:layout_width="260dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="4dp"
-        android:text="Agregar Planta"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Spinner
-        android:id="@+id/spnEstancia"
-        android:layout_width="316dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/green"
-        android:backgroundTintMode="add"
-        android:foregroundTint="#040404"
-        android:outlineAmbientShadowColor="#000000"
-        android:spinnerMode="dialog"
-        android:textAlignment="viewStart"
-        android:textDirection="inherit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnTipo" />
-
-    <Spinner
-        android:id="@+id/spnTipo"
-        android:layout_width="316dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/green"
-        android:backgroundTintMode="add"
-        android:foregroundTint="#040404"
-        android:outlineAmbientShadowColor="#000000"
-        android:spinnerMode="dialog"
-        android:textAlignment="viewStart"
-        android:textDirection="inherit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etConsejo" />
-
-    <Spinner
-        android:id="@+id/spnRiego"
-        android:layout_width="316dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/green"
-        android:backgroundTintMode="add"
-        android:foregroundTint="#040404"
-        android:outlineAmbientShadowColor="#000000"
-        android:spinnerMode="dialog"
-        android:textAlignment="viewStart"
-        android:textDirection="inherit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnEstancia" />
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAgregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="84dp"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:text="Agregar Planta"
+            android:background="@drawable/button_round"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSeleccionarImagen" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

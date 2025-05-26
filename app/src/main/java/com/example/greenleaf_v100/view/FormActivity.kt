@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -70,7 +71,23 @@ class FormActivity : AppCompatActivity() {
             }
         }
 
+        // Paso 1 → Paso 2
+        binding.btnSiguiente.setOnClickListener {
+            if (validarPaso1()) {
+                binding.formStep1.visibility = View.GONE
+                binding.btnSiguiente.visibility = View.GONE
+                binding.formStep2.visibility = View.VISIBLE
+                binding.btnAgregar.visibility = View.VISIBLE
+            }
+        }
 
+        // Paso 2 → Paso 1
+        binding.btnVolver.setOnClickListener {
+            binding.formStep2.visibility = View.GONE
+            binding.btnAgregar.visibility = View.GONE
+            binding.formStep1.visibility = View.VISIBLE
+            binding.btnSiguiente.visibility = View.VISIBLE
+        }
 
 
     }
@@ -146,5 +163,19 @@ class FormActivity : AppCompatActivity() {
                 Toast.makeText(this, "❌ Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
 
+    }
+
+    private fun validarPaso1(): Boolean {
+        val nombre = binding.etNombre.text.toString().trim()
+        val precio = binding.etPrecio.text.toString().trim()
+        val descripcion = binding.etDescripcion.text.toString().trim()
+        val consejo = binding.etConsejo.text.toString().trim()
+
+        if (nombre.isEmpty() || precio.isEmpty() || descripcion.isEmpty() || consejo.isEmpty()) {
+            Toast.makeText(this, "Por favor llena todos los campos del paso 1", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 }
