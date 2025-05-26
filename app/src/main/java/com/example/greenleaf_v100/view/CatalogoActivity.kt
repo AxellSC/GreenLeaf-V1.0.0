@@ -71,7 +71,7 @@ class CatalogoActivity : AppCompatActivity() {
             }
         }
 
-        // Marcar el ítem actual seleccionado (por ejemplo, si estás en InicioActivity)
+
        // binding.bottomNavigationView.selectedItemId = R.id.nav_inicio
 
     }
@@ -87,6 +87,7 @@ class CatalogoActivity : AppCompatActivity() {
                 putExtra("ESTANCIA", planta.estancia)
                 putExtra("RIEGO", planta.riego)
                 putExtra("CONSEJO",planta.consejo)
+                putExtra("STOCK", planta.stock)
 
             }
             startActivity(intent)

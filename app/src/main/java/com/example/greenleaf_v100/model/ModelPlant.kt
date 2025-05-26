@@ -12,4 +12,5 @@ data class ModelPlanta (
     val estancia: String = "",    // spnEstancia
     val riego: String = "",       // spnRiego
     val consejo: String = "",
+    val stock: Int = 0
 )

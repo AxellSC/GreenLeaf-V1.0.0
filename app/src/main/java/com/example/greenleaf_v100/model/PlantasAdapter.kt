@@ -27,6 +27,7 @@ class PlantasAdapter(
                 tvDescripcion.text = planta.descripcion
 
 
+
                 // Asignar iconos según características
                 ivTipo.setImageResource(getIconoTipo(planta.tipo))
                 ivEstancia.setImageResource(getIconoEstancia(planta.estancia))

@@ -54,6 +54,13 @@ class FormActivity : AppCompatActivity() {
             val spnTipo = binding.spnTipo.selectedItem.toString()
             val spnEstancia = binding.spnEstancia.selectedItem.toString()
             val spnRiego = binding.spnRiego.selectedItem.toString()
+            val stockStr = binding.etStock.text.toString().trim()
+            val stock = stockStr.toIntOrNull()
+
+            if (stock == null) {
+                Toast.makeText(this, "Stock debe ser un número válido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
 
             if (imageUri == null || nombre.isBlank() || descripcion.isBlank() || precio.isBlank() || consejo.isBlank() )  {
@@ -67,7 +74,7 @@ class FormActivity : AppCompatActivity() {
             }
 
             subirImagenAFirebase(imageUri!!) { urlImagen ->
-                guardarPlantaEnFirestore(nombre, descripcion, precio, urlImagen, spnTipo, spnEstancia, spnRiego, consejo)
+                guardarPlantaEnFirestore(nombre, descripcion, precio, urlImagen, spnTipo, spnEstancia, spnRiego, consejo, stock)
             }
         }
 
@@ -135,7 +142,8 @@ class FormActivity : AppCompatActivity() {
         spnTipo: String,
         spnEstancia: String,
         spnRiego: String,
-        consejo: String)
+        consejo: String,
+        stock: Int)
     {
         val nuevoDocumento = Firebase.firestore.collection("plantas").document()
 
@@ -148,7 +156,8 @@ class FormActivity : AppCompatActivity() {
             spnTipo,       // categoria
             spnEstancia,   // tipoCuidado
             spnRiego,       // nivelDificultad
-            consejo
+            consejo,
+            stock,
 
         )
 
@@ -170,8 +179,9 @@ class FormActivity : AppCompatActivity() {
         val precio = binding.etPrecio.text.toString().trim()
         val descripcion = binding.etDescripcion.text.toString().trim()
         val consejo = binding.etConsejo.text.toString().trim()
+        val stock = binding.etStock.text.toString().trim()
 
-        if (nombre.isEmpty() || precio.isEmpty() || descripcion.isEmpty() || consejo.isEmpty()) {
+        if (nombre.isEmpty() || precio.isEmpty() || descripcion.isEmpty() || consejo.isEmpty() || stock.isEmpty()) {
             Toast.makeText(this, "Por favor llena todos los campos del paso 1", Toast.LENGTH_SHORT).show()
             return false
         }

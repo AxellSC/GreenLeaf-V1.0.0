@@ -26,7 +26,7 @@
         android:id="@+id/formStep1"
         android:layout_width="0dp"
         android:visibility="visible"
-        android:layout_height="580dp"
+        android:layout_height="650dp"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -57,7 +57,7 @@
             android:id="@+id/etDescripcion"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
 
             android:background="@drawable/input_bg"
             android:padding="10dp"
@@ -69,6 +69,31 @@
             app:layout_constraintTop_toBottomOf="@id/tvDescripcion" />
 
         <TextView
+            android:id="@+id/tvConsejo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Consejo/Tip de cuidado"
+            android:textColor="@color/blackText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etDescripcion" />
+
+        <EditText
+            android:id="@+id/etConsejo"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="12dp"
+
+            android:background="@drawable/input_bg"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#BCBCBC"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvConsejo" />
+
+        <TextView
             android:id="@+id/tvDescripcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,13 +101,13 @@
             android:text="Descripción"
             android:textColor="@color/blackText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etPrecio" />
+            app:layout_constraintTop_toBottomOf="@id/etStock" />
 
         <EditText
             android:id="@+id/etPrecio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/input_bg"
             android:hint="$0.00"
             android:inputType="numberDecimal"
@@ -98,46 +123,48 @@
             android:id="@+id/tvPrecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="24dp"
             android:text="Precio"
             android:textColor="@color/blackText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etNombre" />
 
-        <EditText
-            android:id="@+id/etConsejo"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="4dp"
+        <TextView
+            android:id="@+id/tvCantidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Cantidad"
+            android:textColor="@color/blackText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPrecio" />
 
+        <EditText
+            android:id="@+id/etStock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:background="@drawable/input_bg"
+            android:hint="0"
+            android:inputType="numberDecimal"
             android:padding="10dp"
             android:textColor="#000000"
             android:textColorHint="#BCBCBC"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvConsejo" />
-
-        <TextView
-            android:id="@+id/tvConsejo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="Consejo/Tip de cuidado"
-            android:textColor="@color/blackText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etDescripcion" />
+            app:layout_constraintTop_toBottomOf="@id/tvCantidad" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSiguiente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:text="Siguiente"
+            android:layout_marginTop="16dp"
             android:background="@drawable/button_round2"
+            android:text="Siguiente"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etConsejo" />
     </androidx.constraintlayout.widget.ConstraintLayout>

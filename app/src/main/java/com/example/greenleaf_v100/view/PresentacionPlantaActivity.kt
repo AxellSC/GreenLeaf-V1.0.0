@@ -25,6 +25,7 @@ class PresentacionPlantaActivity : AppCompatActivity() {
         val estancia = intent.getStringExtra("ESTANCIA") ?: ""
         val riego = intent.getStringExtra("RIEGO") ?: ""
         val consejo = intent.getStringExtra("CONSEJO") ?: ""
+        val stock = intent.getIntExtra("STOCK", 0)
 
         binding.tvNombreP.text = nombre
         binding.tvDescripcionP.text = descripcion
@@ -32,6 +33,7 @@ class PresentacionPlantaActivity : AppCompatActivity() {
         binding.tvA.text = "Necesita " + tipo
         binding.tvB.text = "Ideal para " + estancia
         binding.tvC.text = "Ocupa un riego " + riego
+        binding.tvStockP.text = "Cantidad disponible: " + stock
 
         Glide.with(this)
             .load(fotoUrl)
