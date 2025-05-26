@@ -34,7 +34,7 @@
             android:id="@+id/ivPlantaC"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
             android:foregroundGravity="center"
             android:scaleType="centerCrop" />
@@ -67,7 +67,7 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="170dp"
+            android:layout_marginLeft="160dp"
             android:layout_marginTop="135dp"
             android:text="¡Consiguelo aquí!"
             android:textColor="@color/green"
@@ -110,6 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:itemIconTint="@color/greenA"
+        app:itemRippleColor="@color/greenA"
         app:itemTextColor="@color/grayText"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
