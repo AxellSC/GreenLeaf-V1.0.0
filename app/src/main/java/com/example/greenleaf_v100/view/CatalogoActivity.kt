@@ -85,17 +85,19 @@ class CatalogoActivity : AppCompatActivity() {
             val intent = Intent(this, PresentacionPlantaActivity::class.java).apply {
                 putExtra("PLANTA_ID", planta.id)
                 putExtra("NOMBRE", planta.nombre)
-                putExtra("DESCRIPCION",planta.descripcion)
+                putExtra("DESCRIPCION", planta.descripcion)
                 putExtra("FOTO_URL", planta.fotoUrl)
                 putExtra("TIPO", planta.tipo)
                 putExtra("ESTANCIA", planta.estancia)
                 putExtra("RIEGO", planta.riego)
-                putExtra("CONSEJO",planta.consejo)
+                putExtra("CONSEJO", planta.consejo)
                 putExtra("STOCK", planta.stock)
 
             }
             startActivity(intent)
         }
+
+
 
         // GridLayoutManager con 2 columnas
         val gridLayoutManager = GridLayoutManager(this, 2) // <- Número de columnas

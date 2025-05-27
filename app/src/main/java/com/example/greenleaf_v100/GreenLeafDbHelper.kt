@@ -1,5 +1,6 @@
 package com.example.greenleaf_v100
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -28,6 +29,7 @@ class GreenLeafDbHelper(context: Context) : SQLiteOpenHelper(
                 riego TEXT,
                 estancia TEXT,
                 fotoUrl TEXT
+            
             );
         """.trimIndent())
     }
@@ -40,4 +42,6 @@ class GreenLeafDbHelper(context: Context) : SQLiteOpenHelper(
     fun getFavoritoDao(): FavoritoDao {
         return FavoritoDao(this.readableDatabase)
     }
+
+
 }

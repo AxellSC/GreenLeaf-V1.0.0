@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.greenleaf_v100.GreenLeafDbHelper
 import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ItemPlantaBinding
 
@@ -33,7 +34,15 @@ class PlantasAdapter(
                 ivEstancia.setImageResource(getIconoEstancia(planta.estancia))
                 ivRiego.setImageResource(getIconoRiego(planta.riego))
 
+                // Configurar icono de favorito (aquí está la solución)
+                ivFavorito.setImageResource(
+                    if (planta.esFavorito) R.drawable.icon_corazonb
+                    else R.drawable.icon_corazona
+                )
+
                 root.setOnClickListener { onItemClick(planta) }
+
+
             }
         }
 
