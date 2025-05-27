@@ -8,7 +8,7 @@ import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ItemPlantaBinding
 
 class PlantasAdapter(
-    private val plantas: List<ModelPlanta>,
+    private var plantas: List<ModelPlanta> = listOf(),
     private val onItemClick: (ModelPlanta) -> Unit
 ) : RecyclerView.Adapter<PlantasAdapter.PlantaViewHolder>() {
 
@@ -72,4 +72,9 @@ class PlantasAdapter(
     }
 
     override fun getItemCount() = plantas.size
+
+    fun actualizarLista(nuevaLista: List<ModelPlanta>) {
+        plantas = nuevaLista
+        notifyDataSetChanged()
+    }
 }

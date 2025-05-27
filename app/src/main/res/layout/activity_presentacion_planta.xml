@@ -19,6 +19,7 @@
             android:scaleType="centerCrop"
             android:foregroundGravity="center"/>
 
+
         <TextView
             android:id="@+id/tvNombreP"
             android:layout_width="match_parent"
@@ -177,6 +178,16 @@
                 android:textStyle="italic"
                 android:text="Lorem Ipsum is simply dummy "/>
         </androidx.cardview.widget.CardView>
+
+        <CheckBox
+            android:id="@+id/checkFavorito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir a favoritos"
+            android:textColor="@color/green"
+            android:textSize="16sp"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 </ScrollView>

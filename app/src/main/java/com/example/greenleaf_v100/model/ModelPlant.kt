@@ -1,16 +1,14 @@
 package com.example.greenleaf_v100.model
 
-import android.widget.ImageView
-
-data class ModelPlanta (
+data class ModelPlanta(
     var id: String = "",
-    val nombre: String = "",
-    val descripcion: String = "",
-    val precio: String = "",
-    val fotoUrl: String = "",
-    val tipo: String = "",         // spnTipo
-    val estancia: String = "",    // spnEstancia
-    val riego: String = "",       // spnRiego
-    val consejo: String = "",
-    val stock: Int = 0
+    var nombre: String = "",
+    var descripcion: String = "",
+    var precio: String = "",
+    var fotoUrl: String = "",
+    var tipo: String = "",         // spnTipo
+    var estancia: String = "",     // spnEstancia
+    var riego: String = "",        // spnRiego
+    var consejo: String = "",
+    var stock: Int = 0
 )
