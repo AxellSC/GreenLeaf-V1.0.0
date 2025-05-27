@@ -67,6 +67,10 @@ class CatalogoActivity : AppCompatActivity() {
                     startActivity(Intent(this, PerfilActivity::class.java))
                     true
                 }
+                R.id.nav_favoritos -> {
+                    startActivity(Intent(this,FavoritosActivity::class.java ))
+                    true
+                }
                 else -> false
             }
         }
