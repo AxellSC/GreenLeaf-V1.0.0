@@ -37,9 +37,13 @@ class CatalogoActivity : AppCompatActivity() {
 
         if (tipoUsuario == UserType.ADMIN) {
             // Mostrar opciones de admin
+            binding.barraAdmin.visibility = View.VISIBLE
+            binding.barraCliente.visibility = View.INVISIBLE
         } else if (tipoUsuario == UserType.CLIENTE) {
             // Mostrar opciones para cliente
             binding.btnAgregarPlanta.visibility = View.INVISIBLE
+            binding.barraCliente.visibility = View.VISIBLE
+            binding.barraAdmin.visibility = View.INVISIBLE
 
         } else {
             // Tipo desconocido o no recibido
@@ -53,7 +57,7 @@ class CatalogoActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+        binding.barraCliente.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_inicio -> {
                     // Ya estás en esta Activity
@@ -69,6 +73,24 @@ class CatalogoActivity : AppCompatActivity() {
                 }
                 R.id.nav_favoritos -> {
                     startActivity(Intent(this,FavoritosActivity::class.java ))
+                    true
+                }
+                else -> false
+            }
+        }
+
+        binding.barraAdmin.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_inicio -> {
+                    // Ya estás en esta Activity
+                    true
+                }
+                R.id.nav_ventas -> {
+                    startActivity(Intent(this, VentasActivity::class.java))
+                    true
+                }
+                R.id.nav_perfil -> {
+                    startActivity(Intent(this, PerfilActivity::class.java))
                     true
                 }
                 else -> false

@@ -105,7 +105,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+        android:id="@+id/barraCliente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -114,8 +114,25 @@
         app:itemTextColor="@color/grayText"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu1"
+        app:menu="@menu/menu_cliente"
         tools:layout_editor_absoluteX="-4dp"
+        android:visibility="invisible"
         android:background="@color/white"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/barraAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemIconTint="@color/greenA"
+        app:itemRippleColor="@color/greenA"
+        app:itemTextColor="@color/grayText"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_admin"
+        tools:layout_editor_absoluteX="-4dp"
+        android:visibility="invisible"
+        android:background="@color/white"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

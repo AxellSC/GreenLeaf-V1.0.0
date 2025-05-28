@@ -66,18 +66,8 @@ class PresentacionPlantaActivity : AppCompatActivity() {
         val dao = dbHelper.getFavoritoDao()
 
         // Cargar estado inicial
-        binding.checkFavorito.isChecked = dao.esFavorito(id)
 
-        // Escuchar cambios
-        binding.checkFavorito.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                dao.agregarFavorito(planta)
-                Toast.makeText(this, "Agregado a favoritos", Toast.LENGTH_SHORT).show()
-            } else {
-                dao.eliminarFavorito(id)
-                Toast.makeText(this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show()
-            }
-        }
+
     }
 
     private fun getIconoTipo(tipo: String): Int = when (tipo.lowercase()) {

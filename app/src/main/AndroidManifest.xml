@@ -20,11 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenLeaf_V100"
         tools:targetApi="31">
-
+        <activity
+            android:name=".view.VentasActivity"
+            android:exported="false" />
         <activity
             android:name=".view.FavoritosActivity"
             android:exported="false" />
-
         <activity
             android:name=".view.PerfilActivity"
             android:exported="false" />
