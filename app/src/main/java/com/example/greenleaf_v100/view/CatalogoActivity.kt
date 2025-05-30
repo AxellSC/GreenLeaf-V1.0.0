@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ActivityCatalogoBinding
 import com.example.greenleaf_v100.model.ModelPlanta
 import com.example.greenleaf_v100.model.PlantasAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.greenleaf_v100.viewmodel.UserType
+import kotlin.random.Random
 
 class CatalogoActivity : AppCompatActivity() {
 
@@ -27,11 +29,14 @@ class CatalogoActivity : AppCompatActivity() {
     private lateinit var adapter: PlantasAdapter
     private val plantasList = mutableListOf<ModelPlanta>()
 
+    private var plantaDestacada: ModelPlanta? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCatalogoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
         val tipoUsuarioStr = intent.getStringExtra("TIPO_USUARIO")
         val tipoUsuario = tipoUsuarioStr?.let { UserType.valueOf(it) }
 
@@ -100,6 +105,23 @@ class CatalogoActivity : AppCompatActivity() {
 
        // binding.bottomNavigationView.selectedItemId = R.id.nav_inicio
 
+        binding.cardViewRandom.setOnClickListener {
+            plantaDestacada?.let { planta ->
+                val intent = Intent(this, PresentacionPlantaActivity::class.java).apply {
+                    putExtra("PLANTA_ID", planta.id)
+                    putExtra("NOMBRE", planta.nombre)
+                    putExtra("DESCRIPCION", planta.descripcion)
+                    putExtra("FOTO_URL", planta.fotoUrl)
+                    putExtra("TIPO", planta.tipo)
+                    putExtra("ESTANCIA", planta.estancia)
+                    putExtra("RIEGO", planta.riego)
+                    putExtra("CONSEJO", planta.consejo)
+                    putExtra("STOCK", planta.stock)
+                }
+                startActivity(intent)
+            }
+        }
+
     }
 
     private fun setupRecyclerView() {
@@ -143,6 +165,15 @@ class CatalogoActivity : AppCompatActivity() {
                 }
                 adapter.notifyDataSetChanged()
 
+                if (plantasList.isNotEmpty()) {
+                    val indiceAleatorio = (0 until plantasList.size).random()
+                    val planta = plantasList[indiceAleatorio]
+                    plantaDestacada = planta
+                    binding.tvNombrePC.text = planta.nombre
+                    binding.tvDescripcionC.text = planta.descripcion
+                    Glide.with(this).load(planta.fotoUrl).into(binding.ivPlantaC)
+                }
+
                 //Mostrar mensaje si no hay datos
                 binding.tvEmptyView.visibility = if (plantasList.isEmpty()) View.VISIBLE else View.GONE
             }
@@ -155,4 +186,5 @@ class CatalogoActivity : AppCompatActivity() {
                 ).show()
             }
     }
+
 }
