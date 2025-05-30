@@ -31,7 +31,6 @@ class PlantasAdapter(
                 tvDescripcion.text = planta.descripcion
 
 
-
                 // Asignar iconos según características
                 ivTipo.setImageResource(getIconoTipo(planta.tipo))
                 ivEstancia.setImageResource(getIconoEstancia(planta.estancia))
@@ -42,15 +41,17 @@ class PlantasAdapter(
 
                 root.setOnClickListener { onItemClick(planta) }
 
-                // Mostrar botón solo si es admin
-                btnEliminar.visibility = if (isAdmin)
-                {View.VISIBLE}
-                else View.GONE
-                btnEliminar.setOnClickListener {
-                    onDeleteClick(planta)
+
+                if (isAdmin) {
+                    btnEliminar.visibility = View.VISIBLE
+                    btnFavorito.visibility = View.GONE
+                    btnEliminar.setOnClickListener {
+                        onDeleteClick(planta)
+                    }
+                } else {
+                    btnFavorito.visibility = View.VISIBLE
+                    btnEliminar.visibility = View.GONE
                 }
-
-
             }
         }
 
