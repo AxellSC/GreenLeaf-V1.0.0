@@ -1,6 +1,7 @@
 package com.example.greenleaf_v100.model
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,7 +11,9 @@ import com.example.greenleaf_v100.databinding.ItemPlantaBinding
 
 class PlantasAdapter(
     private var plantas: List<ModelPlanta> = listOf(),
-    private val onItemClick: (ModelPlanta) -> Unit
+    private val onItemClick: (ModelPlanta) -> Unit,
+    private val onDeleteClick: (ModelPlanta) -> Unit,
+    private val isAdmin: Boolean
 ) : RecyclerView.Adapter<PlantasAdapter.PlantaViewHolder>() {
 
     inner class PlantaViewHolder(private val binding: ItemPlantaBinding) :
@@ -35,12 +38,17 @@ class PlantasAdapter(
                 ivRiego.setImageResource(getIconoRiego(planta.riego))
 
                 // Configurar icono de favorito (aquí está la solución)
-                ivFavorito.setImageResource(
-                    if (planta.esFavorito) R.drawable.icon_corazonb
-                    else R.drawable.icon_corazona
-                )
+
 
                 root.setOnClickListener { onItemClick(planta) }
+
+                // Mostrar botón solo si es admin
+                btnEliminar.visibility = if (isAdmin)
+                {View.VISIBLE}
+                else View.GONE
+                btnEliminar.setOnClickListener {
+                    onDeleteClick(planta)
+                }
 
 
             }

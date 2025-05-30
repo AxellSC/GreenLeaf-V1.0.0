@@ -28,6 +28,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/btnEliminar"
+                android:layout_width="53dp"
+                android:layout_height="51dp"
+                android:text="X"
+                android:textSize="8dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/ivFavorito"
                 android:layout_width="25dp"

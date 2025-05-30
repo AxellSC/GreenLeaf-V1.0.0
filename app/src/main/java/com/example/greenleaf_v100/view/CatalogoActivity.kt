@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -21,6 +22,7 @@ import com.example.greenleaf_v100.model.ModelPlanta
 import com.example.greenleaf_v100.model.PlantasAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.greenleaf_v100.viewmodel.UserType
+import com.google.firebase.storage.FirebaseStorage
 import kotlin.random.Random
 
 class CatalogoActivity : AppCompatActivity() {
@@ -125,22 +127,31 @@ class CatalogoActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PlantasAdapter(plantasList) { planta ->
-            val intent = Intent(this, PresentacionPlantaActivity::class.java).apply {
-                putExtra("PLANTA_ID", planta.id)
-                putExtra("NOMBRE", planta.nombre)
-                putExtra("DESCRIPCION", planta.descripcion)
-                putExtra("FOTO_URL", planta.fotoUrl)
-                putExtra("TIPO", planta.tipo)
-                putExtra("ESTANCIA", planta.estancia)
-                putExtra("RIEGO", planta.riego)
-                putExtra("CONSEJO", planta.consejo)
-                putExtra("STOCK", planta.stock)
+        val tipoUsuarioStr = intent.getStringExtra("TIPO_USUARIO")
+        val tipoUsuario = tipoUsuarioStr?.let { UserType.valueOf(it) }
+        val esAdmin = tipoUsuario == UserType.ADMIN
 
-            }
-            startActivity(intent)
-        }
-
+        adapter = PlantasAdapter(
+            plantasList,
+            onItemClick = { planta ->
+                val intent = Intent(this, PresentacionPlantaActivity::class.java).apply {
+                    putExtra("PLANTA_ID", planta.id)
+                    putExtra("NOMBRE", planta.nombre)
+                    putExtra("DESCRIPCION", planta.descripcion)
+                    putExtra("FOTO_URL", planta.fotoUrl)
+                    putExtra("TIPO", planta.tipo)
+                    putExtra("ESTANCIA", planta.estancia)
+                    putExtra("RIEGO", planta.riego)
+                    putExtra("CONSEJO", planta.consejo)
+                    putExtra("STOCK", planta.stock)
+                }
+                startActivity(intent)
+            },
+            onDeleteClick = { planta ->
+                eliminarPlanta(planta)
+            },
+            isAdmin = esAdmin
+        )
 
 
         // GridLayoutManager con 2 columnas
@@ -185,6 +196,66 @@ class CatalogoActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+    }
+
+    private fun eliminarPlanta(planta: ModelPlanta) {
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar planta")
+            .setMessage("¿Estás seguro de que deseas eliminar esta planta?")
+            .setPositiveButton("Sí") { _, _ ->
+
+                // 1. Obtener referencia de la imagen desde la URL
+                planta.fotoUrl?.let { url ->
+                    val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(url)
+
+                    // 2. Eliminar la imagen
+                    storageRef.delete()
+                        .addOnSuccessListener {
+                            // 3. Si se elimina la imagen, eliminar el documento en Firestore
+                            FirebaseFirestore.getInstance().collection("plantas")
+                                .document(planta.id!!)
+                                .delete()
+                                .addOnSuccessListener {
+                                    plantasList.remove(planta)
+                                    adapter.notifyDataSetChanged()
+                                    Toast.makeText(this, "Planta eliminada", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        this,
+                                        "Error al eliminar planta",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Error al eliminar imagen", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                } ?: run {
+                    // Si no tiene imagen (url null), solo eliminar de Firestore
+                    FirebaseFirestore.getInstance().collection("plantas")
+                        .document(planta.id!!)
+                        .delete()
+                        .addOnSuccessListener {
+                            plantasList.remove(planta)
+                            adapter.notifyDataSetChanged()
+                            Toast.makeText(
+                                this,
+                                "Planta eliminada (sin imagen)",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Error al eliminar planta", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                }
+
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 
 }

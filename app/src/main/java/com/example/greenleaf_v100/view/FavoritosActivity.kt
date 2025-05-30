@@ -20,13 +20,6 @@ class FavoritosActivity : AppCompatActivity() {
         binding = ActivityFavoritosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Configurar RecyclerView
-        adapter = PlantasAdapter(emptyList()) { planta ->
-            // Acción al hacer clic en un favorito (opcional)
-            Toast.makeText(this, "Seleccionaste: ${planta.nombre}", Toast.LENGTH_SHORT).show()
-        } // Puedes adaptar esto a tu lógica si tiene clickListener
-        binding.recyclerFavoritos.layoutManager = LinearLayoutManager(this)
-        binding.recyclerFavoritos.adapter = adapter
 
         // Cargar favoritos desde SQLite
         val dbHelper = GreenLeafDbHelper(this)
