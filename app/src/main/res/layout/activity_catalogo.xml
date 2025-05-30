@@ -10,7 +10,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/cardViewRandom"
         android:layout_width="match_parent"
         android:layout_height="190dp"
         app:cardBackgroundColor="@color/greenA"
@@ -18,7 +18,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true">>
 
         <TextView
             android:id="@+id/tvEmptyView"
@@ -43,11 +45,11 @@
             android:id="@+id/tvNombrePC"
             android:layout_width="wrap_content"
             android:layout_marginLeft="180dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="22dp"
             android:layout_height="wrap_content"
             android:text="Planta"
             android:textColor="@color/white"
-            android:textSize="40sp"
+            android:textSize="35sp"
             android:textStyle="bold">
         </TextView>
 
@@ -59,7 +61,7 @@
             android:layout_height="wrap_content"
             android:text="Descripcion"
             android:textColor="@color/grayBackground"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="normal">
         </TextView>
 
