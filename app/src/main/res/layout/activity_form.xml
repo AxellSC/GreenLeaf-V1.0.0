@@ -173,30 +173,35 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/formStep2"
         android:layout_width="match_parent"
-        android:layout_height="580dp"
+        android:layout_height="590dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitulo">
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+        tools:ignore="ExtraText">
 
         <Spinner
             android:id="@+id/spnTipo"
-            android:textColor="@color/blackText"
+            android:popupBackground="@color/black"
+            android:spinnerMode="dropdown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/CustomSpinnerStyle"/>
+
 
         <Spinner
             android:id="@+id/spnEstancia"
-            android:textColor="@color/blackText"
+            style="@style/CustomSpinnerStyle"
+            android:popupBackground="@color/black"
+            android:spinnerMode="dropdown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:backgroundTint="@color/green"
+            android:layout_marginTop="40dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -204,11 +209,12 @@
 
         <Spinner
             android:id="@+id/spnRiego"
-            android:textColor="@color/blackText"
+            style="@style/CustomSpinnerStyle"
+            android:popupBackground="@color/black"
+            android:spinnerMode="dropdown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:backgroundTint="@color/green"
+            android:layout_marginTop="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -237,7 +243,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnVolver"
-            android:layout_width="wrap_content"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="Volver"

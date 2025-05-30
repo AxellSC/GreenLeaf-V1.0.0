@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:textColor">@color/greenA</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/button_round</item>
+    </style>
+
+    <style name="CustomSpinnerDropdownStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:background">@color/green</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+</resources>
