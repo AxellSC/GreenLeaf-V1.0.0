@@ -42,6 +42,8 @@ class CatalogoActivity : AppCompatActivity() {
         val tipoUsuarioStr = intent.getStringExtra("TIPO_USUARIO")
         val tipoUsuario = tipoUsuarioStr?.let { UserType.valueOf(it) }
 
+
+
         if (tipoUsuario == UserType.ADMIN) {
             // Mostrar opciones de admin
             binding.barraAdmin.visibility = View.VISIBLE
