@@ -3,10 +3,20 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.services)
+
+
+    id("kotlin-kapt")
     id("kotlin-parcelize")
+
 }
+    val roomVersion = "2.6.1"
+    val lifecycleVersion = "2.8.1"
+    val coroutinesVersion = "1.8.1"
 
 android {
+
+
+
     namespace = "com.example.greenleaf_v100"
     compileSdk = 35
 
@@ -70,8 +80,16 @@ dependencies {
 
     implementation (libs.firebase.storage)
 
+    // --- ARCH / LIFECYCLE ---
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
 
+
+    // --- ROOM (foto local) ---
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
 
 

@@ -20,48 +20,35 @@ data class LoginResult(
 
 class LoginViewModel : ViewModel() {
     private val auth = FirebaseAuth.getInstance()
-    private val db   = FirebaseFirestore.getInstance()
+    private val firestore = FirebaseFirestore.getInstance()
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
     fun login(email: String, password: String) {
-        if (email.isBlank() || password.isBlank()) {
-            _loginResult.value =
-                LoginResult(false, errorMessage = "Correo y contraseña son obligatorios")
-            return
-        }
-
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener { authResult ->
-                val uid = authResult.user?.uid ?: run {
-                    _loginResult.value =
-                        LoginResult(false, errorMessage = "UID inválido")
+                val uid = authResult.user?.uid
+                if (uid == null) {
+                    _loginResult.value = LoginResult(false, errorMessage = "No se obtuvo UID de usuario.")
                     return@addOnSuccessListener
                 }
-
-                // Primero revisamos si es admin
-                db.collection("admins").document(uid).get()
-                    .addOnSuccessListener { docAdmin ->
-                        if (docAdmin.exists()) {
-                            _loginResult.value = LoginResult(
-                                true,
-                                userType = UserType.ADMIN,
-                                profileData = docAdmin.data
-                            )
-                        } else {
-                            // Luego revisamos clientes
-                            db.collection("clientes").document(uid).get()
-                                .addOnSuccessListener { docCliente ->
-                                    if (docCliente.exists()) {
-                                        _loginResult.value = LoginResult(
-                                            true,
-                                            userType = UserType.CLIENTE,
-                                            profileData = docCliente.data
-                                        )
-                                    }
-                                }
-                        }
+                // Si el usuario se autenticó, vamos a Firestore a leer "role"
+                firestore.collection("users")
+                    .document(uid)
+                    .get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        val roleString = documentSnapshot.getString("role") ?: "CLIENTE"
+                        val userType = if (roleString.uppercase() == "ADMIN")
+                            UserType.ADMIN else UserType.CLIENTE
+                        _loginResult.value = LoginResult(true, userType)
+                    }
+                    .addOnFailureListener { e ->
+                        // Se autenticó, pero no pudimos leer role
+                        _loginResult.value = LoginResult(
+                            false,
+                            errorMessage = "Error al obtener rol: ${e.message}"
+                        )
                     }
             }
             .addOnFailureListener { e ->

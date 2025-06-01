@@ -9,7 +9,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,6 +24,7 @@
                 android:text="Crear cuenta de cliente"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"
                 android:paddingBottom="24dp" />
 
             <!-- Nombre -->
@@ -37,7 +39,8 @@
                     android:id="@+id/etFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido paterno -->
@@ -53,7 +56,8 @@
                     android:id="@+id/etLastNamePat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido materno -->
@@ -69,7 +73,8 @@
                     android:id="@+id/etLastNameMat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Correo electrónico -->
@@ -85,7 +90,8 @@
                     android:id="@+id/etEmailReg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Contraseña -->
@@ -103,7 +109,8 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Confirmar contraseña -->
@@ -121,7 +128,8 @@
                     android:id="@+id/etConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button

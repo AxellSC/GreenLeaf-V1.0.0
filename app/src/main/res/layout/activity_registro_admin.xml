@@ -9,7 +9,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,6 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Registrar Administrador"
+                android:textColor="@color/black"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="24dp" />
@@ -38,6 +40,7 @@
                     android:id="@+id/etFirstNameAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/input_bg"
                     android:inputType="textPersonName" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -55,6 +58,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastNamePatAdmin"
                     android:layout_width="match_parent"
+                    android:background="@drawable/input_bg"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName" />
 
@@ -74,6 +78,7 @@
                     android:id="@+id/etLastNameMatAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/input_bg"
                     android:inputType="textPersonName" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -92,6 +97,7 @@
                     android:id="@+id/etEmailAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/input_bg"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -112,6 +118,7 @@
                     android:id="@+id/etPasswordAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/input_bg"
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -131,6 +138,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etConfirmPasswordAdmin"
                     android:layout_width="match_parent"
+                    android:background="@drawable/input_bg"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
 
