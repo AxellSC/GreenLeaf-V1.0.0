@@ -61,22 +61,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btnFavorito"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="16dp"
-
-                android:clickable="true"
-                android:focusable="true"
-
-                android:scaleType="centerCrop"
-                android:src="@drawable/icon_corazona"
+                android:background="@drawable/icon_corazona"
+                android:textSize="8dp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.842"
+                app:layout_constraintHorizontal_bias="0.874"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
             <ImageButton
                 android:id="@+id/btnEliminar"
@@ -85,7 +82,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/icon_delete"
                 android:textSize="8dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.874"
                 app:layout_constraintStart_toStartOf="parent"
