@@ -9,6 +9,7 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
         tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
@@ -59,6 +60,7 @@
         <activity
             android:name=".view.FormActivity"
             android:exported="false" />
+
     </application>
 
 </manifest>

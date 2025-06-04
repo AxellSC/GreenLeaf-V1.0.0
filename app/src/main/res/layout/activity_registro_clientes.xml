@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
 
     <data>
         <!-- Puedes enlazar tu ViewModel aquí si utilizas DataBinding -->
@@ -23,7 +24,8 @@
                 android:text="Crear cuenta de cliente"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:layout_gravity="center_horizontal"
-                android:paddingBottom="24dp" />
+                android:paddingBottom="24dp"
+                android:textColor="@color/black"/>
 
             <!-- Nombre -->
             <com.google.android.material.textfield.TextInputLayout
@@ -37,7 +39,8 @@
                     android:id="@+id/etFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido paterno -->
@@ -53,7 +56,8 @@
                     android:id="@+id/etLastNamePat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido materno -->
@@ -69,7 +73,8 @@
                     android:id="@+id/etLastNameMat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Correo electrónico -->
@@ -85,7 +90,8 @@
                     android:id="@+id/etEmailReg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Contraseña -->
@@ -103,7 +109,8 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Confirmar contraseña -->
@@ -121,7 +128,8 @@
                     android:id="@+id/etConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -129,7 +137,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Registrar"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/verde_principal"/>
 
             <TextView
                 android:id="@+id/tvBackToLogin"

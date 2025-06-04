@@ -3,7 +3,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.services)
+    id("org.jetbrains.kotlin.kapt")
     id("kotlin-parcelize")
+
 }
 
 android {
@@ -62,6 +64,7 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.glide)
 
+
     //FireBase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
@@ -69,10 +72,6 @@ dependencies {
     implementation (libs.firebase.auth.ktx)
 
     implementation (libs.firebase.storage)
-
-
-
-
 
 
     testImplementation(libs.junit)

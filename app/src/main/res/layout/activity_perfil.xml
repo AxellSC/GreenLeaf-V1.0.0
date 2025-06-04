@@ -1,10 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.PerfilActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="24dp"
+    android:background="@color/white"
+    tools:context="com.example.greenleaf_v100.view.PerfilActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Foto de perfil -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivProfile"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/usuario_foto"
+            android:contentDescription="@string/profile_image"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Circle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            tools:ignore="ImageContrastCheck"/>
+
+        <!-- FAB para editar foto -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabEditPhoto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@color/green"
+            android:src="@drawable/boton_agregar"
+            app:layout_constraintBottom_toBottomOf="@id/ivProfile"
+            app:layout_constraintEnd_toEndOf="@id/ivProfile"
+            tools:ignore="TouchTargetSizeCheck"
+            android:contentDescription="@string/change_photo"/>
+
+        <!-- Saludo -->
+        <TextView
+            android:id="@+id/tvGreeting"
+            style="?attr/textAppearanceTitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido NombreUsuario!"
+            app:layout_constraintTop_toBottomOf="@id/ivProfile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"/>
+
+
+        <View
+            android:id="@+id/dividerEmail"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?attr/colorOutline"
+            app:layout_constraintTop_toBottomOf="@id/tvGreeting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp"/>
+
+        <TextView
+            android:id="@+id/labelEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correo: "
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            app:layout_constraintTop_toBottomOf="@id/dividerEmail"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="user@dominio.com"
+            android:autoLink="email"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/labelEmail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnEditEmail"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="12dp"
+            android:textColorLink="@color/verde_principal"/>
+
+
+        <TextView
+            android:id="@+id/btnEditEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="7dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="sans-serif-medium"
+            android:minHeight="48dp"
+            android:text="Cambiar"
+            android:textColor="@color/verde_principal"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerEmail"
+            app:layout_constraintTop_toTopOf="@id/tvEmail" />
+
+        <View
+            android:id="@+id/dividerPassword"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?attr/colorOutline"
+            app:layout_constraintTop_toBottomOf="@id/tvEmail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/labelPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contraseña"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            app:layout_constraintTop_toBottomOf="@id/dividerPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="12dp"/>
+
+
+        <TextView
+            android:id="@+id/tvPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="********"
+            android:fontFamily="monospace"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelPassword"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="12dp"/>
+
+
+        <TextView
+            android:id="@+id/btnEditPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="sans-serif-medium"
+            android:minHeight="48dp"
+            android:layout_marginRight="7dp"
+            android:text="Cambiar"
+            android:textColor="@color/verde_principal"
+            app:layout_constraintBaseline_toBaselineOf="@id/labelPassword"
+            app:layout_constraintBottom_toTopOf="@id/tvPassword"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <View
+            android:id="@+id/dividerRole"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?attr/colorOutline"
+            app:layout_constraintTop_toBottomOf="@id/tvPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/labelRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo de Usuario: "
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            app:layout_constraintTop_toBottomOf="@id/dividerRole"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/tvRole"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cliente"
+            app:layout_constraintTop_toBottomOf="@id/labelRole"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="12dp"/>
+
+        <View
+            android:id="@+id/dividerCerrar"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?attr/colorOutline"
+            app:layout_constraintTop_toBottomOf="@id/tvRole"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cerrar sesión"
+            app:layout_constraintTop_toBottomOf="@id/tvRole"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="32dp"
+
+            android:backgroundTint="@color/verde_principal"
+            android:textColor="@color/white"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
