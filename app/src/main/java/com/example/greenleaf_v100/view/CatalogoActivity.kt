@@ -61,6 +61,7 @@ class CatalogoActivity : AppCompatActivity() {
 
         binding.btnAgregarPlanta.setOnClickListener{
             val intent = Intent(this, FormActivity::class.java)
+
             startActivity(intent)
         }
 
@@ -75,11 +76,15 @@ class CatalogoActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_perfil -> {
-                    startActivity(Intent(this, PerfilActivity::class.java))
+                    val intent = Intent(this, PerfilActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_favoritos -> {
-                    startActivity(Intent(this,FavoritosActivity::class.java ))
+                    val intent = Intent(this, FavoritosActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
                     true
                 }
                 else -> false
@@ -97,7 +102,9 @@ class CatalogoActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_perfil -> {
-                    startActivity(Intent(this, PerfilActivity::class.java))
+                    val intent = Intent(this, FavoritosActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
                     true
                 }
                 else -> false

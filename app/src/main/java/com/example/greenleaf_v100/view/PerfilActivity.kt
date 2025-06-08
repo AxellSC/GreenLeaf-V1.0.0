@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.InputType
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,12 +16,19 @@ import com.bumptech.glide.Glide
 import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ActivityPerfilBinding
 import com.example.greenleaf_v100.viewmodel.PerfilViewModel
+import com.example.greenleaf_v100.viewmodel.UserType
 import com.google.firebase.auth.FirebaseAuth
+
 
 class PerfilActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPerfilBinding
     private lateinit var viewModel: PerfilViewModel
+
+
+
+
+
 
     // Launcher para elegir foto desde galería
     private val pickImageLauncher = registerForActivityResult(
@@ -54,6 +62,73 @@ class PerfilActivity : AppCompatActivity() {
 
         observarLiveData()
         configurarListeners()
+
+        val tipoUsuarioStr = intent.getStringExtra("TIPO_USUARIO")
+        val tipoUsuario = tipoUsuarioStr?.let { UserType.valueOf(it) }
+
+        if (tipoUsuario == UserType.ADMIN) {
+            // Mostrar opciones admin
+
+            binding.barraAdmin.visibility = View.VISIBLE
+            binding.barraCliente.visibility = View.INVISIBLE
+            binding.barraCliente.visibility = View.VISIBLE
+            binding.barraAdmin.visibility = View.INVISIBLE
+        } else if (tipoUsuario == UserType.CLIENTE){
+            binding.barraCliente.visibility = View.VISIBLE
+            binding.barraAdmin.visibility = View.INVISIBLE
+        }
+
+        //Barra de navegacion
+        binding.barraCliente.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_inicio -> {
+                    val intent = Intent(this, CatalogoActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_carrito -> {
+                    startActivity(Intent(this, CatalogoActivity::class.java))
+                    true
+                }
+                R.id.nav_perfil -> {
+                    val intent = Intent(this, PerfilActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_favoritos -> {
+                    val intent = Intent(this, FavoritosActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+
+        binding.barraAdmin.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_inicio -> {
+                    val intent = Intent(this, CatalogoActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_ventas -> {
+                    startActivity(Intent(this, VentasActivity::class.java))
+                    true
+                }
+                R.id.nav_perfil -> {
+                    val intent = Intent(this, PerfilActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
     private fun observarLiveData() {
