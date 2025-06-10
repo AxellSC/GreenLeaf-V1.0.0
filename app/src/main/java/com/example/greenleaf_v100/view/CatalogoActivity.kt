@@ -44,10 +44,12 @@ class CatalogoActivity : AppCompatActivity() {
 
         if (tipoUsuario == UserType.ADMIN) {
             // Mostrar opciones de admin
+            binding.barraAdmin.selectedItemId = R.id.nav_inicio
             binding.barraAdmin.visibility = View.VISIBLE
             binding.barraCliente.visibility = View.INVISIBLE
         } else if (tipoUsuario == UserType.CLIENTE) {
             // Mostrar opciones para cliente
+            binding.barraCliente.selectedItemId = R.id.nav_inicio
             binding.btnAgregarPlanta.visibility = View.INVISIBLE
             binding.barraCliente.visibility = View.VISIBLE
             binding.barraAdmin.visibility = View.INVISIBLE
@@ -98,11 +100,13 @@ class CatalogoActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_ventas -> {
-                    startActivity(Intent(this, VentasActivity::class.java))
+                    val intent = Intent(this, VentasActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_perfil -> {
-                    val intent = Intent(this, FavoritosActivity::class.java)
+                    val intent = Intent(this, PerfilActivity::class.java)
                     intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
                     startActivity(intent)
                     true

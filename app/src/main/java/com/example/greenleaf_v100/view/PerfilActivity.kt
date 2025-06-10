@@ -68,12 +68,12 @@ class PerfilActivity : AppCompatActivity() {
 
         if (tipoUsuario == UserType.ADMIN) {
             // Mostrar opciones admin
-
+            binding.barraAdmin.selectedItemId = R.id.nav_perfil
             binding.barraAdmin.visibility = View.VISIBLE
             binding.barraCliente.visibility = View.INVISIBLE
-            binding.barraCliente.visibility = View.VISIBLE
-            binding.barraAdmin.visibility = View.INVISIBLE
+
         } else if (tipoUsuario == UserType.CLIENTE){
+            binding.barraCliente.selectedItemId = R.id.nav_perfil
             binding.barraCliente.visibility = View.VISIBLE
             binding.barraAdmin.visibility = View.INVISIBLE
         }
@@ -106,6 +106,7 @@ class PerfilActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        //Bara de Admin
 
         binding.barraAdmin.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -116,7 +117,9 @@ class PerfilActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_ventas -> {
-                    startActivity(Intent(this, VentasActivity::class.java))
+                    val intent = Intent(this, VentasActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_perfil -> {
