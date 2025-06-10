@@ -70,12 +70,17 @@ class CatalogoActivity : AppCompatActivity() {
         binding.barraCliente.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_inicio -> {
-                    // Ya estás en esta Activity
+                    val intent = Intent(this, CatalogoActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_carrito -> {
-                    startActivity(Intent(this, CatalogoActivity::class.java))
+                    val intent = Intent(this, CarritoActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
                     true
+
                 }
                 R.id.nav_perfil -> {
                     val intent = Intent(this, PerfilActivity::class.java)

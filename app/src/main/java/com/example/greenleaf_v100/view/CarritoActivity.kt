@@ -3,29 +3,27 @@ package com.example.greenleaf_v100.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.greenleaf_v100.GreenLeafDbHelper
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ActivityCarritoBinding
-import com.example.greenleaf_v100.databinding.ActivityFavoritosBinding
-import com.example.greenleaf_v100.model.ModelPlanta
-import com.example.greenleaf_v100.model.PlantasAdapter
+import com.example.greenleaf_v100.databinding.ActivityCatalogoBinding
+import com.example.greenleaf_v100.databinding.ActivityPerfilBinding
+import com.example.greenleaf_v100.databinding.ActivityVentasBinding
 import com.example.greenleaf_v100.viewmodel.UserType
 
-class FavoritosActivity : AppCompatActivity() {
+class CarritoActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityFavoritosBinding
-    private lateinit var adapter: PlantasAdapter
-    private lateinit var favoritos: List<ModelPlanta>
+    private lateinit var binding: ActivityCarritoBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        binding = ActivityFavoritosBinding.inflate(layoutInflater)
+        binding = ActivityCarritoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val tipoUsuarioStr = intent.getStringExtra("TIPO_USUARIO")
@@ -33,7 +31,7 @@ class FavoritosActivity : AppCompatActivity() {
 
         if (tipoUsuario == UserType.CLIENTE) {
             // Mostrar opciones admin
-            binding.barraCliente.selectedItemId = R.id.nav_favoritos
+            binding.barraCliente.selectedItemId = R.id.nav_carrito
             binding.barraCliente.visibility = View.VISIBLE
 
         } else if (tipoUsuario == UserType.ADMIN) {
@@ -75,5 +73,5 @@ class FavoritosActivity : AppCompatActivity() {
             }
         }
     }
-}
 
+}

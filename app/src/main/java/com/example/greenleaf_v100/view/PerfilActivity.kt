@@ -28,8 +28,6 @@ class PerfilActivity : AppCompatActivity() {
 
 
 
-
-
     // Launcher para elegir foto desde galería
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -78,7 +76,8 @@ class PerfilActivity : AppCompatActivity() {
             binding.barraAdmin.visibility = View.INVISIBLE
         }
 
-        //Barra de navegacion
+        //Barra de navegacion Cliente
+
         binding.barraCliente.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_inicio -> {
@@ -88,7 +87,9 @@ class PerfilActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_carrito -> {
-                    startActivity(Intent(this, CatalogoActivity::class.java))
+                    val intent = Intent(this, CarritoActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_perfil -> {
