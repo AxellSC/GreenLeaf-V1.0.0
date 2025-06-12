@@ -55,4 +55,6 @@
             android:layout_height="wrap_content"
             android:text="Confirmar compra"/>
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

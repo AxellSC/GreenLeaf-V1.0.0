@@ -89,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Entrar"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/verde_principal" />
 
             <!-- Registrar Administrador -->
@@ -98,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/verde_principal"
                 android:text="Registrar administrador"
+                android:textColor="@color/white"
                 android:layout_marginTop="8dp" />
 
             <!-- Registro Cliente -->

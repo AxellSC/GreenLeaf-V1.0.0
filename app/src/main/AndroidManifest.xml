@@ -63,6 +63,7 @@
             android:exported="false" />
         <activity
             android:name=".view.CatalogoActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:exported="false" />
         <activity
             android:name=".view.FormActivity"

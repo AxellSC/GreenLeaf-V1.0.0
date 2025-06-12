@@ -1,9 +1,12 @@
 package com.example.greenleaf_v100.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -23,6 +26,7 @@ import com.example.greenleaf_v100.model.PlantasAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.greenleaf_v100.viewmodel.UserType
 import com.google.firebase.storage.FirebaseStorage
+import java.util.Locale
 import kotlin.random.Random
 
 class CatalogoActivity : AppCompatActivity() {
@@ -30,6 +34,9 @@ class CatalogoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCatalogoBinding
     private lateinit var adapter: PlantasAdapter
     private val plantasList = mutableListOf<ModelPlanta>()
+    private val plantasListFull = mutableListOf<ModelPlanta>()
+
+    private var isAscendingOrder = true // Comienza con orden A-Z
 
     private var plantaDestacada: ModelPlanta? = null
 
@@ -60,6 +67,8 @@ class CatalogoActivity : AppCompatActivity() {
 
         setupRecyclerView()
         cargarPlantas()
+        setupSearchView()
+        setupSortButton()
 
         binding.btnAgregarPlanta.setOnClickListener{
             val intent = Intent(this, FormActivity::class.java)
@@ -184,12 +193,15 @@ class CatalogoActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 plantasList.clear()
+                plantasListFull.clear()
                 for (document in result) {
                     val planta = document.toObject(ModelPlanta::class.java).apply {
                         id = document.id
                     }
                     plantasList.add(planta)
+                    plantasListFull.add(planta)
                 }
+                sortPlantasAZ()
                 adapter.notifyDataSetChanged()
 
                 if (plantasList.isNotEmpty()) {
@@ -273,5 +285,63 @@ class CatalogoActivity : AppCompatActivity() {
             .setNegativeButton("Cancelar", null)
             .show()
     }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterPlantas(newText.orEmpty())
+                return true
+            }
+        })
+    }
+
+    private fun setupSortButton() {
+        binding.btnSort.setOnClickListener {
+            if (isAscendingOrder) {
+                sortPlantasZA() // Orden Z-A
+            } else {
+                sortPlantasAZ() // Orden A-Z
+            }
+            isAscendingOrder = !isAscendingOrder // Alterna el estado
+
+            // Opcional: Cambiar el icono para reflejar el orden actual
+            /*val iconRes = if (isAscendingOrder) R.drawable.ic_sort_az else R.drawable.ic_sort_za
+            binding.btnSort.setImageResource(iconRes)*/
+        }
+    }
+
+    private fun filterPlantas(text: String) {
+        val filteredList = if (text.isEmpty()) {
+            plantasListFull.toList()
+        } else {
+            plantasListFull.filter { planta ->
+                planta.nombre?.contains(text, ignoreCase = true) == true ||
+                        planta.descripcion?.contains(text, ignoreCase = true) == true ||
+                        planta.tipo?.contains(text, ignoreCase = true) == true
+            }
+        }
+
+        plantasList.clear()
+        plantasList.addAll(filteredList)
+        adapter.notifyDataSetChanged()
+    }
+
+
+
+
+    private fun sortPlantasAZ() {
+        plantasList.sortBy { it.nombre?.lowercase(Locale.getDefault()) ?: "" }
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun sortPlantasZA() {
+        plantasList.sortByDescending { it.nombre?.lowercase(Locale.getDefault()) ?: "" }
+        adapter.notifyDataSetChanged()
+    }
+
 
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
         <item name="android:textColor">@color/greenA</item>
@@ -16,6 +16,18 @@
     <style name="ShapeAppearance.Circle" parent="ShapeAppearance.Material3.Corner.None">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <!-- Color del texto de búsqueda -->
+        <item name="android:textColor">#FF0000</item> <!-- negro -->
+        <item name="android:queryHint">@color/black</item>
+
+        <!-- Color del ícono de lupa -->
+        <item name="android:searchHintIcon">@color/black</item>
+
+        <!-- Fondo del SearchView -->
+        <item name="android:background">#5B5B5B</item> <!-- blanco -->
     </style>
 
 </resources>
