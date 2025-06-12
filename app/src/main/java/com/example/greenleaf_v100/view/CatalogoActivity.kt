@@ -76,7 +76,7 @@ class CatalogoActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_carrito -> {
-                    val intent = Intent(this, CarritoActivity::class.java)
+                    val intent = Intent(this, CarritoClienteActivity::class.java)
                     intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
                     startActivity(intent)
                     true

@@ -9,9 +9,19 @@ import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.data.dao.FavoritoDao
 import com.example.greenleaf_v100.databinding.ActivityPresentacionPlantaBinding
 import com.example.greenleaf_v100.model.ModelPlanta
+import com.example.greenleaf_v100.viewmodel.CarritoViewModel
+import androidx.activity.viewModels
+import com.example.greenleaf_v100.model.CartItem
+import com.google.firebase.auth.FirebaseAuth
 
 class PresentacionPlantaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPresentacionPlantaBinding
+
+    // Guarda aquí la planta que construyes desde el Intent
+    private lateinit var planta: ModelPlanta
+
+    // Tu VM sigue igual, con setUserId(...) y cartItems
+    private val cartViewModel: CarritoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +78,40 @@ class PresentacionPlantaActivity : AppCompatActivity() {
         // Cargar estado inicial
 
 
+        val cartViewModel: CarritoViewModel by viewModels()
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+            ?: throw IllegalStateException("Usuario no logueado")
+        cartViewModel.setUserId(uid)
+
+        // ⑤ Observa cartItems, no getUserCart
+        cartViewModel.cartItems.observe(this) { list ->
+            // Por ejemplo, actualiza el texto del botón si ya está en la lista
+            val enCarrito = list.any { it.id == planta.id }
+            binding.btnAddCart.text = if (enCarrito)
+                "Eliminar del carrito"
+            else
+                "Añadir al carrito"
+        }
+
+
+        binding.btnAddCart.setOnClickListener {
+            val item = CartItem(
+                id       = planta.id,
+                userId   = uid,
+                name     = planta.nombre,
+                price    = planta.precio.toDouble(),
+                imageUrl = planta.fotoUrl
+            )
+            if (binding.btnAddCart.text == "Añadir al carrito") {
+                cartViewModel.addToCart(item)
+                Toast.makeText(this, "Agregado al carrito", Toast.LENGTH_SHORT).show()
+            } else {
+                cartViewModel.removeFromCart(item)
+                Toast.makeText(this, "Eliminado del carrito", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     private fun getIconoTipo(tipo: String): Int = when (tipo.lowercase()) {
@@ -88,4 +132,6 @@ class PresentacionPlantaActivity : AppCompatActivity() {
         "moderado", "bajo" -> R.drawable.iconc_bajor
         else -> R.drawable.iconc_bajor
     }
+
+
 }

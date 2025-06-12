@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("kotlin-parcelize")
 
+
 }
 
 android {
@@ -77,6 +78,16 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // 1) Room runtime
+    implementation("androidx.room:room-runtime:2.5.1")
+    // 2) Extensiones Kotlin + Coroutines
+    implementation("androidx.room:room-ktx:2.5.1")
+    // 3) Processor para generar el código de Room
+    kapt("androidx.room:room-compiler:2.5.1")
+
+    // (opcional) si usas LiveData con Room
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
 
 
 
