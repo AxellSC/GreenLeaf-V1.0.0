@@ -38,6 +38,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFirstName"
                     android:layout_width="match_parent"
+                    app:errorEnabled="true"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:background="@drawable/input_bg"/>
@@ -56,6 +57,7 @@
                     android:id="@+id/etLastNamePat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:errorEnabled="true"
                     android:inputType="textPersonName"
                     android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -72,6 +74,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastNameMat"
                     android:layout_width="match_parent"
+                    app:errorEnabled="true"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:background="@drawable/input_bg"/>
@@ -90,6 +93,7 @@
                     android:id="@+id/etEmailReg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:errorEnabled="true"
                     android:inputType="textEmailAddress"
                     android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -128,9 +132,65 @@
                     android:id="@+id/etConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:errorEnabled="true"
                     android:inputType="textPassword"
                     android:background="@drawable/input_bg"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Fecha de nacimiento -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilFechaNacimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha de nacimiento"
+                app:errorEnabled="true"
+                android:layout_marginTop="16dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFechaNacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    app:errorEnabled="true"
+                    android:clickable="true"
+                    android:background="@drawable/input_bg"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Domicilio fiscal -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDomicilioFiscal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Domicilio fiscal"
+                app:errorEnabled="true"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDomicilioFiscal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPostalAddress"
+                    android:background="@drawable/input_bg"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Foto & vista previa -->
+            <Button
+                android:id="@+id/btnTakePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tomar fotografía"
+                android:backgroundTint="@color/verde_principal"
+                android:layout_marginTop="16dp"/>
+
+            <ImageView
+                android:id="@+id/ivPhotoPreview"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:background="@android:color/darker_gray"/>
 
             <Button
                 android:id="@+id/btnRegister"
