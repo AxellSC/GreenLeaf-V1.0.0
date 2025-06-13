@@ -182,7 +182,7 @@
 
         <Spinner
             android:id="@+id/spnTipo"
-            android:popupBackground="@color/black"
+            android:popupBackground="@color/white"
             android:spinnerMode="dropdown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -196,7 +196,7 @@
         <Spinner
             android:id="@+id/spnEstancia"
             style="@style/CustomSpinnerStyle"
-            android:popupBackground="@color/black"
+            android:popupBackground="@color/white"
             android:spinnerMode="dropdown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -210,7 +210,7 @@
         <Spinner
             android:id="@+id/spnRiego"
             style="@style/CustomSpinnerStyle"
-            android:popupBackground="@color/black"
+            android:popupBackground="@color/white"
             android:spinnerMode="dropdown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

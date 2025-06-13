@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -41,6 +42,7 @@ class CatalogoActivity : AppCompatActivity() {
     private var plantaDestacada: ModelPlanta? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         binding = ActivityCatalogoBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -303,14 +305,12 @@ class CatalogoActivity : AppCompatActivity() {
         binding.btnSort.setOnClickListener {
             if (isAscendingOrder) {
                 sortPlantasZA() // Orden Z-A
+                binding.btnSort.setImageResource(R.drawable.a_z) // Icono Z-A
             } else {
                 sortPlantasAZ() // Orden A-Z
+                binding.btnSort.setImageResource(R.drawable.z_a) // Icono A-Z
             }
             isAscendingOrder = !isAscendingOrder // Alterna el estado
-
-            // Opcional: Cambiar el icono para reflejar el orden actual
-            /*val iconRes = if (isAscendingOrder) R.drawable.ic_sort_az else R.drawable.ic_sort_za
-            binding.btnSort.setImageResource(iconRes)*/
         }
     }
 
