@@ -26,6 +26,8 @@ import com.example.greenleaf_v100.model.ModelPlanta
 import com.example.greenleaf_v100.model.PlantasAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.example.greenleaf_v100.viewmodel.UserType
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.storage.FirebaseStorage
 import java.util.Locale
 import kotlin.random.Random
@@ -177,7 +179,8 @@ class CatalogoActivity : AppCompatActivity() {
             onDeleteClick = { planta ->
                 eliminarPlanta(planta)
             },
-            isAdmin = esAdmin
+            onFavoritoClick = { planta, nuevoEstado -> toggleFavorito(planta, nuevoEstado) },
+            isAdmin = false
         )
 
 
@@ -191,41 +194,55 @@ class CatalogoActivity : AppCompatActivity() {
     }
 
     private fun cargarPlantas() {
-        FirebaseFirestore.getInstance().collection("plantas")
-            .get()
-            .addOnSuccessListener { result ->
-                plantasList.clear()
-                plantasListFull.clear()
-                for (document in result) {
-                    val planta = document.toObject(ModelPlanta::class.java).apply {
-                        id = document.id
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+        val refFavoritos = db.collection("favoritos").document(userId).collection("plantasFavoritas")
+        val refPlantas = db.collection("plantas")
+
+        // Primero obtener los favoritos del usuario
+        refFavoritos.get().addOnSuccessListener { favSnapshot ->
+            val favoritosIds = favSnapshot.documents.map { it.id }
+
+            // Luego obtener todas las plantas
+            refPlantas.get()
+                .addOnSuccessListener { result ->
+                    plantasList.clear()
+                    plantasListFull.clear()
+
+                    for (document in result) {
+                        val planta = document.toObject(ModelPlanta::class.java).apply {
+                            id = document.id
+                            esFavorito = favoritosIds.contains(document.id)
+                        }
+                        plantasList.add(planta)
+                        plantasListFull.add(planta)
                     }
-                    plantasList.add(planta)
-                    plantasListFull.add(planta)
-                }
-                sortPlantasAZ()
-                adapter.notifyDataSetChanged()
 
-                if (plantasList.isNotEmpty()) {
-                    val indiceAleatorio = (0 until plantasList.size).random()
-                    val planta = plantasList[indiceAleatorio]
-                    plantaDestacada = planta
-                    binding.tvNombrePC.text = planta.nombre
-                    binding.tvDescripcionC.text = planta.descripcion
-                    Glide.with(this).load(planta.fotoUrl).into(binding.ivPlantaC)
-                }
+                    sortPlantasAZ()
+                    adapter.notifyDataSetChanged()
 
-                //Mostrar mensaje si no hay datos
-                binding.tvEmptyView.visibility = if (plantasList.isEmpty()) View.VISIBLE else View.GONE
-            }
-            .addOnFailureListener { exception ->
-                binding.tvEmptyView.visibility = View.VISIBLE
-                Toast.makeText(
-                    this,
-                    "Error al cargar plantas: ${exception.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+                    if (plantasList.isNotEmpty()) {
+                        val indiceAleatorio = (0 until plantasList.size).random()
+                        val planta = plantasList[indiceAleatorio]
+                        plantaDestacada = planta
+                        binding.tvNombrePC.text = planta.nombre
+                        binding.tvDescripcionC.text = planta.descripcion
+                        Glide.with(this).load(planta.fotoUrl).into(binding.ivPlantaC)
+                    }
+
+                    binding.tvEmptyView.visibility = if (plantasList.isEmpty()) View.VISIBLE else View.GONE
+                }
+                .addOnFailureListener { exception ->
+                    binding.tvEmptyView.visibility = View.VISIBLE
+                    Toast.makeText(
+                        this,
+                        "Error al cargar plantas: ${exception.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(this, "Error al cargar favoritos: ${exception.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun eliminarPlanta(planta: ModelPlanta) {
@@ -343,5 +360,53 @@ class CatalogoActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
+
+    private fun actualizarFavorito(planta: ModelPlanta, esFavorito: Boolean) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+        val favRef = db.collection("favoritos").document(userId).collection("plantasFavoritas")
+
+        if (esFavorito) {
+            // Agregar planta a favoritos
+            favRef.document(planta.id).set(planta)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "${planta.nombre} agregada a favoritos", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error al agregar favorito", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            // Eliminar de favoritos
+            favRef.document(planta.id).delete()
+                .addOnSuccessListener {
+                    Toast.makeText(this, "${planta.nombre} eliminada de favoritos", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error al eliminar favorito", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun toggleFavorito(planta: ModelPlanta, nuevoEstado: Boolean) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val favRef = FirebaseFirestore.getInstance()
+            .collection("favoritos")
+            .document(uid)
+            .collection("plantasFavoritas")
+            .document(planta.id)
+
+        // Actualizar estado local
+        planta.esFavorito = nuevoEstado
+        val index = plantasList.indexOfFirst { it.id == planta.id }
+        if (index != -1) {
+            adapter.notifyItemChanged(index)
+        }
+
+        if (nuevoEstado) {
+            favRef.set(mapOf("timestamp" to FieldValue.serverTimestamp()))
+        } else {
+            favRef.delete()
+        }
+    }
 
 }
