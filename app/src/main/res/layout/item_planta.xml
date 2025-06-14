@@ -30,8 +30,8 @@
 
 
             <androidx.cardview.widget.CardView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="16dp"
                 app:cardBackgroundColor="@color/grayBackground"
                 app:cardCornerRadius="10dp"
@@ -41,9 +41,9 @@
                 app:layout_constraintTop_toTopOf="parent">
                 <ImageButton
                     android:id="@+id/btnEliminar"
-                    android:layout_width="20dp"
+                    android:layout_width="28dp"
                     android:layout_gravity="center"
-                    android:layout_height="20dp"
+                    android:layout_height="28dp"
                     android:background="@drawable/icon_delete"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +53,8 @@
 
                 <ImageButton
                     android:id="@+id/btnFavorito"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:layout_gravity="center"
                     android:background="@drawable/icon_corazona"
                     android:visibility="visible"

@@ -8,6 +8,27 @@
     android:background="@color/grayBackground"
     tools:context=".view.FavoritosActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:text="Lista de favoritos"
+
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFavoritos"
+        android:layout_width="match_parent"
+        android:paddingStart="20dp"
+        android:layout_height="620dp"
+        app:layout_constraintBottom_toBottomOf="@+id/barraCliente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/barraCliente"
@@ -23,5 +44,4 @@
         tools:layout_editor_absoluteX="-4dp"
         android:visibility="visible"
         android:background="@color/white"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

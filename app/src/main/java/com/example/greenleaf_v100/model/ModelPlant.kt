@@ -11,5 +11,5 @@ data class ModelPlanta(
     var riego: String = "",        // spnRiego
     var consejo: String = "",
     var stock: Int = 0,
-    val esFavorito: Boolean = false
+    var esFavorito: Boolean = false
 )

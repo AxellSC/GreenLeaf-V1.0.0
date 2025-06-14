@@ -13,6 +13,7 @@ class PlantasAdapter(
     private var plantas: List<ModelPlanta> = listOf(),
     private val onItemClick: (ModelPlanta) -> Unit,
     private val onDeleteClick: (ModelPlanta) -> Unit,
+    private val onFavoritoClick: (ModelPlanta, Boolean) -> Unit,
     private val isAdmin: Boolean
 ) : RecyclerView.Adapter<PlantasAdapter.PlantaViewHolder>() {
 
@@ -51,6 +52,18 @@ class PlantasAdapter(
                 } else {
                     btnFavorito.visibility = View.VISIBLE
                     btnEliminar.visibility = View.GONE
+                }
+
+                //Es favorito?
+                btnFavorito.setBackgroundResource(
+                    if (planta.esFavorito) R.drawable.icon_corazonb // rojo lleno
+                    else R.drawable.icon_corazona // blanco vacío
+                )
+
+                // Click en favorito
+                btnFavorito.setOnClickListener {
+                    val nuevoEstado = !planta.esFavorito
+                    onFavoritoClick(planta, nuevoEstado)
                 }
             }
         }
