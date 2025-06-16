@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.greenleaf_v100.GreenLeafDbHelper
 import com.example.greenleaf_v100.R
-import com.example.greenleaf_v100.data.dao.FavoritoDao
 import com.example.greenleaf_v100.databinding.ActivityPresentacionPlantaBinding
 import com.example.greenleaf_v100.model.ModelPlanta
 import com.example.greenleaf_v100.viewmodel.CarritoViewModel
@@ -15,12 +13,9 @@ import com.example.greenleaf_v100.model.CartItem
 import com.google.firebase.auth.FirebaseAuth
 
 class PresentacionPlantaActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityPresentacionPlantaBinding
-
-    // Guarda aquí la planta que construyes desde el Intent
     private lateinit var planta: ModelPlanta
-
-    // Tu VM sigue igual, con setUserId(...) y cartItems
     private val cartViewModel: CarritoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,84 +29,92 @@ class PresentacionPlantaActivity : AppCompatActivity() {
         val descripcion = intent.getStringExtra("DESCRIPCION") ?: ""
         val consejo = intent.getStringExtra("CONSEJO") ?: ""
         val tipo = intent.getStringExtra("TIPO") ?: ""
-        val precio = intent.getDoubleExtra("PRECIO", 0.0)
+        val precio = intent.getStringExtra("PRECIO") ?: "0.0" // Cambiado a String
         val stock = intent.getIntExtra("STOCK", 0)
         val riego = intent.getStringExtra("RIEGO") ?: ""
         val estancia = intent.getStringExtra("ESTANCIA") ?: ""
         val fotoUrl = intent.getStringExtra("FOTO_URL") ?: ""
 
-        // Mostrar info en pantalla
-        binding.tvNombreP.text = nombre
-        binding.tvDescripcionP.text = descripcion
-        binding.tvConsejo.text = consejo
-        binding.tvA.text = "Necesita $tipo"
-        binding.tvB.text = "Ideal para $estancia"
-        binding.tvC.text = "Ocupa un riego $riego"
-        binding.tvStockP.text = "Cantidad disponible: $stock"
-
-        Glide.with(this)
-            .load(fotoUrl)
-            .into(binding.ivPlantaP)
-
-        binding.iconA.setImageResource(getIconoTipo(tipo))
-        binding.iconB.setImageResource(getIconoEstancia(estancia))
-        binding.iconC.setImageResource(getIconoRiego(riego))
-
         // Crear objeto planta
-        val planta = ModelPlanta(
+        planta = ModelPlanta(
             id = id,
             nombre = nombre,
             descripcion = descripcion,
             consejo = consejo,
             tipo = tipo,
-            precio = precio.toString(),
+            precio = precio,
             stock = stock,
             riego = riego,
             estancia = estancia,
             fotoUrl = fotoUrl
         )
 
-        // Configurar favoritos con SQLite
-        val dbHelper = GreenLeafDbHelper(this)
-        val dao = dbHelper.getFavoritoDao()
+        // Mostrar info en pantalla
+        mostrarInformacionPlanta()
 
-        // Cargar estado inicial
-
-
-        val cartViewModel: CarritoViewModel by viewModels()
-
+        // Configurar ViewModel
         val uid = FirebaseAuth.getInstance().currentUser?.uid
             ?: throw IllegalStateException("Usuario no logueado")
         cartViewModel.setUserId(uid)
 
-        // ⑤ Observa cartItems, no getUserCart
-        cartViewModel.cartItems.observe(this) { list ->
-            // Por ejemplo, actualiza el texto del botón si ya está en la lista
-            val enCarrito = list.any { it.id == planta.id }
-            binding.btnAddCart.text = if (enCarrito)
-                "Eliminar del carrito"
-            else
-                "Añadir al carrito"
+        // Observar cambios en el carrito
+        cartViewModel.cartItems.observe(this) { items ->
+            val enCarrito = items.any { it.id == planta.id }
+            actualizarBotonCarrito(enCarrito)
         }
 
-
+        // Configurar click del botón
         binding.btnAddCart.setOnClickListener {
-            val item = CartItem(
-                id       = planta.id,
-                userId   = uid,
-                name     = planta.nombre,
-                price    = planta.precio.toDouble(),
-                imageUrl = planta.fotoUrl
-            )
-            if (binding.btnAddCart.text == "Añadir al carrito") {
-                cartViewModel.addToCart(item)
-                Toast.makeText(this, "Agregado al carrito", Toast.LENGTH_SHORT).show()
-            } else {
-                cartViewModel.removeFromCart(item)
-                Toast.makeText(this, "Eliminado del carrito", Toast.LENGTH_SHORT).show()
-            }
+            toggleCarrito()
         }
+    }
 
+    private fun mostrarInformacionPlanta() {
+        with(binding) {
+            tvNombreP.text = planta.nombre
+            tvDescripcionP.text = planta.descripcion
+            tvConsejo.text = planta.consejo
+            tvA.text = "Necesita ${planta.tipo}"
+            tvB.text = "Ideal para ${planta.estancia}"
+            tvC.text = "Ocupa un riego ${planta.riego}"
+            tvStockP.text = "Cantidad disponible: ${planta.stock}"
+
+            Glide.with(this@PresentacionPlantaActivity)
+                .load(planta.fotoUrl)
+                .into(ivPlantaP)
+
+            iconA.setImageResource(getIconoTipo(planta.tipo))
+            iconB.setImageResource(getIconoEstancia(planta.estancia))
+            iconC.setImageResource(getIconoRiego(planta.riego))
+        }
+    }
+
+    private fun toggleCarrito() {
+        val item = CartItem(
+            id = planta.id,
+            userId = FirebaseAuth.getInstance().currentUser?.uid ?: return,
+            name = planta.nombre,
+            price = planta.precio.toDoubleOrNull() ?: 0.0,
+            imageUrl = planta.fotoUrl
+        )
+
+        val enCarrito = cartViewModel.cartItems.value?.any { it.id == planta.id } ?: false
+
+        if (enCarrito) {
+            cartViewModel.removeFromCart(item)
+            Toast.makeText(this, "${planta.nombre} eliminada del carrito", Toast.LENGTH_SHORT).show()
+        } else {
+            cartViewModel.addToCart(item)
+            Toast.makeText(this, "${planta.nombre} agregada al carrito", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun actualizarBotonCarrito(enCarrito: Boolean) {
+        binding.btnAddCart.text = if (enCarrito) {
+            "Eliminar del carrito"
+        } else {
+            "Añadir al carrito"
+        }
     }
 
     private fun getIconoTipo(tipo: String): Int = when (tipo.lowercase()) {

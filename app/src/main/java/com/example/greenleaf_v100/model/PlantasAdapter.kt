@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.greenleaf_v100.GreenLeafDbHelper
 import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ItemPlantaBinding
 

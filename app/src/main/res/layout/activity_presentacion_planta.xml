@@ -51,6 +51,14 @@
             android:textSize="15sp"
             android:textColor="@color/grayText"/>
 
+        <Button
+            android:id="@+id/btnAddCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Añadir al carrito"
+            android:layout_marginTop="8dp"/>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cv1"
             android:layout_width="match_parent"
@@ -179,13 +187,7 @@
                 android:text="Lorem Ipsum is simply dummy "/>
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btnAddCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Añadir al carrito"
-            android:layout_marginTop="8dp"/>
+
 
     </LinearLayout>
 </ScrollView>
