@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,10 +19,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ActivityFormBinding
 import com.example.greenleaf_v100.model.ModelPlanta
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
 import java.util.UUID
@@ -29,6 +32,9 @@ import java.util.UUID
 class FormActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFormBinding
     private var imageUri: Uri? = null
+    private var isModoEdicion = false
+    private var plantaId: String? = null
+    private var fotoUrlExistente: String? = null
 
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         imageUri = uri
@@ -40,45 +46,25 @@ class FormActivity : AppCompatActivity() {
         binding = ActivityFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Verificar si estamos en modo edición
+        isModoEdicion = intent.getBooleanExtra("MODO_EDICION", false)
+        plantaId = intent.getStringExtra("PLANTA_ID")
+
         setupSpinners()
+        setupUI()
 
         binding.btnSeleccionarImagen.setOnClickListener {
             pickImage.launch("image/*")
         }
 
         binding.btnAgregar.setOnClickListener {
-            val nombre = binding.etNombre.text.toString()
-            val descripcion = binding.etDescripcion.text.toString()
-            val precio = binding.etPrecio.text.toString()
-            val consejo = binding.etConsejo.text.toString()
-            val spnTipo = binding.spnTipo.selectedItem.toString()
-            val spnEstancia = binding.spnEstancia.selectedItem.toString()
-            val spnRiego = binding.spnRiego.selectedItem.toString()
-            val stockStr = binding.etStock.text.toString().trim()
-            val stock = stockStr.toIntOrNull()
-
-            if (stock == null) {
-                Toast.makeText(this, "Stock debe ser un número válido", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-
-            if (imageUri == null || nombre.isBlank() || descripcion.isBlank() || precio.isBlank() || consejo.isBlank() )  {
-                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (spnTipo == "Tipo:" || spnEstancia == "Estancia:" || spnRiego == "Riego:") {
-                Toast.makeText(this, "Seleccione todas las opciones", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            subirImagenAFirebase(imageUri!!) { urlImagen ->
-                guardarPlantaEnFirestore(nombre, descripcion, precio, urlImagen, spnTipo, spnEstancia, spnRiego, consejo, stock)
+            if (isModoEdicion) {
+                actualizarPlanta()
+            } else {
+                agregarNuevaPlanta()
             }
         }
 
-        // Paso 1 → Paso 2
         binding.btnSiguiente.setOnClickListener {
             if (validarPaso1()) {
                 binding.formStep1.visibility = View.GONE
@@ -88,15 +74,180 @@ class FormActivity : AppCompatActivity() {
             }
         }
 
-        // Paso 2 → Paso 1
         binding.btnVolver.setOnClickListener {
             binding.formStep2.visibility = View.GONE
             binding.btnAgregar.visibility = View.GONE
             binding.formStep1.visibility = View.VISIBLE
             binding.btnSiguiente.visibility = View.VISIBLE
         }
+    }
 
+    private fun setupUI() {
+        if (isModoEdicion) {
+            binding.tvTitulo.text = "Editar Planta"
+            binding.btnAgregar.text = "Actualizar Planta"
 
+            // Cargar datos existentes
+            cargarDatosPlanta()
+        } else {
+            binding.tvTitulo.text = "Agregar Nueva Planta"
+            binding.btnAgregar.text = "Agregar Planta"
+        }
+    }
+
+    private fun cargarDatosPlanta() {
+        // Obtener datos del intent
+        binding.etNombre.setText(intent.getStringExtra("NOMBRE"))
+        binding.etDescripcion.setText(intent.getStringExtra("DESCRIPCION"))
+        binding.etPrecio.setText(intent.getStringExtra("PRECIO"))
+        binding.etConsejo.setText(intent.getStringExtra("CONSEJO"))
+        binding.etStock.setText(intent.getIntExtra("STOCK", 0).toString())
+
+        // Cargar imagen existente
+        fotoUrlExistente = intent.getStringExtra("FOTO_URL")
+        if (!fotoUrlExistente.isNullOrEmpty()) {
+            Glide.with(this).load(fotoUrlExistente).into(binding.ivPreview)
+        }
+
+        // Seleccionar valores en los spinners
+        val tipo = intent.getStringExtra("TIPO")
+        val estancia = intent.getStringExtra("ESTANCIA")
+        val riego = intent.getStringExtra("RIEGO")
+
+        seleccionarSpinner(binding.spnTipo, tipo)
+        seleccionarSpinner(binding.spnEstancia, estancia)
+        seleccionarSpinner(binding.spnRiego, riego)
+    }
+
+    private fun seleccionarSpinner(spinner: Spinner, value: String?) {
+        if (value == null) return
+
+        val adapter = spinner.adapter as ArrayAdapter<*>
+        for (i in 0 until adapter.count) {
+            if (adapter.getItem(i).toString() == value) {
+                spinner.setSelection(i)
+                break
+            }
+        }
+    }
+
+    private fun agregarNuevaPlanta() {
+        val nombre = binding.etNombre.text.toString()
+        val descripcion = binding.etDescripcion.text.toString()
+        val precio = binding.etPrecio.text.toString()
+        val consejo = binding.etConsejo.text.toString()
+        val spnTipo = binding.spnTipo.selectedItem.toString()
+        val spnEstancia = binding.spnEstancia.selectedItem.toString()
+        val spnRiego = binding.spnRiego.selectedItem.toString()
+        val stockStr = binding.etStock.text.toString().trim()
+        val stock = stockStr.toIntOrNull()
+
+        if (stock == null) {
+            Toast.makeText(this, "Stock debe ser un número válido", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (imageUri == null) {
+            Toast.makeText(this, "Selecciona una imagen", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (nombre.isBlank() || descripcion.isBlank() || precio.isBlank() || consejo.isBlank()) {
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (spnTipo == "Tipo:" || spnEstancia == "Estancia:" || spnRiego == "Riego:") {
+            Toast.makeText(this, "Seleccione todas las opciones", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        subirImagenAFirebase(imageUri!!) { urlImagen ->
+            guardarPlantaEnFirestore(
+                nombre, descripcion, precio, urlImagen,
+                spnTipo, spnEstancia, spnRiego, consejo, stock
+            )
+        }
+    }
+
+    private fun actualizarPlanta() {
+        val nombre = binding.etNombre.text.toString()
+        val descripcion = binding.etDescripcion.text.toString()
+        val precio = binding.etPrecio.text.toString()
+        val consejo = binding.etConsejo.text.toString()
+        val spnTipo = binding.spnTipo.selectedItem.toString()
+        val spnEstancia = binding.spnEstancia.selectedItem.toString()
+        val spnRiego = binding.spnRiego.selectedItem.toString()
+        val stockStr = binding.etStock.text.toString().trim()
+        val stock = stockStr.toIntOrNull()
+
+        if (stock == null) {
+            Toast.makeText(this, "Stock debe ser un número válido", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (nombre.isBlank() || descripcion.isBlank() || precio.isBlank() || consejo.isBlank()) {
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (spnTipo == "Tipo:" || spnEstancia == "Estancia:" || spnRiego == "Riego:") {
+            Toast.makeText(this, "Seleccione todas las opciones", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (imageUri != null) {
+            // Subir nueva imagen y actualizar
+            subirImagenAFirebase(imageUri!!) { nuevaUrl ->
+                actualizarPlantaEnFirestore(
+                    nombre, descripcion, precio, nuevaUrl,
+                    spnTipo, spnEstancia, spnRiego, consejo, stock
+                )
+            }
+        } else {
+            // Usar la imagen existente
+            actualizarPlantaEnFirestore(
+                nombre, descripcion, precio, fotoUrlExistente ?: "",
+                spnTipo, spnEstancia, spnRiego, consejo, stock
+            )
+        }
+    }
+
+    private fun actualizarPlantaEnFirestore(
+        nombre: String,
+        descripcion: String,
+        precio: String,
+        urlImagen: String,
+        spnTipo: String,
+        spnEstancia: String,
+        spnRiego: String,
+        consejo: String,
+        stock: Int
+    ) {
+        if (plantaId == null) return
+
+        val plantaActualizada = hashMapOf<String, Any>(
+            "nombre" to nombre,
+            "descripcion" to descripcion,
+            "precio" to precio,
+            "fotoUrl" to urlImagen,
+            "tipo" to spnTipo,
+            "estancia" to spnEstancia,
+            "riego" to spnRiego,
+            "consejo" to consejo,
+            "stock" to stock
+        )
+
+        FirebaseFirestore.getInstance().collection("plantas")
+            .document(plantaId!!)
+            .update(plantaActualizada)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Planta actualizada correctamente", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al actualizar: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun setupSpinners() {

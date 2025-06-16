@@ -180,7 +180,10 @@ class CatalogoActivity : AppCompatActivity() {
                 eliminarPlanta(planta)
             },
             onFavoritoClick = { planta, nuevoEstado -> toggleFavorito(planta, nuevoEstado) },
-            isAdmin = false
+            onEditClick = { planta -> // Nuevo listener
+                editarPlanta(planta)
+            },
+            isAdmin = tipoUsuario == UserType.ADMIN
         )
 
 
@@ -407,6 +410,23 @@ class CatalogoActivity : AppCompatActivity() {
         } else {
             favRef.delete()
         }
+    }
+
+    private fun editarPlanta(planta: ModelPlanta) {
+        val intent = Intent(this, FormActivity::class.java).apply {
+            putExtra("MODO_EDICION", true)
+            putExtra("PLANTA_ID", planta.id)
+            putExtra("NOMBRE", planta.nombre)
+            putExtra("DESCRIPCION", planta.descripcion)
+            putExtra("PRECIO", planta.precio)
+            putExtra("FOTO_URL", planta.fotoUrl)
+            putExtra("TIPO", planta.tipo)
+            putExtra("ESTANCIA", planta.estancia)
+            putExtra("RIEGO", planta.riego)
+            putExtra("CONSEJO", planta.consejo)
+            putExtra("STOCK", planta.stock)
+        }
+        startActivity(intent)
     }
 
 }

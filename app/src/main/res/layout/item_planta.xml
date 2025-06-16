@@ -28,10 +28,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnEditarC"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/grayBackground"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.168"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/btnEditar"
+                    android:layout_width="28dp"
+                    android:layout_gravity="center"
+                    android:layout_height="28dp"
+                    android:background="@drawable/icon_editar"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.874"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
                 android:layout_marginTop="16dp"
                 app:cardBackgroundColor="@color/grayBackground"
                 app:cardCornerRadius="10dp"

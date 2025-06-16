@@ -14,6 +14,7 @@ class PlantasAdapter(
     private val onItemClick: (ModelPlanta) -> Unit,
     private val onDeleteClick: (ModelPlanta) -> Unit,
     private val onFavoritoClick: (ModelPlanta, Boolean) -> Unit,
+    private val onEditClick: (ModelPlanta) -> Unit = {},
     private val isAdmin: Boolean
 ) : RecyclerView.Adapter<PlantasAdapter.PlantaViewHolder>() {
 
@@ -37,7 +38,6 @@ class PlantasAdapter(
                 ivEstancia.setImageResource(getIconoEstancia(planta.estancia))
                 ivRiego.setImageResource(getIconoRiego(planta.riego))
 
-                // Configurar icono de favorito (aquí está la solución)
 
 
                 root.setOnClickListener { onItemClick(planta) }
@@ -45,13 +45,20 @@ class PlantasAdapter(
 
                 if (isAdmin) {
                     btnEliminar.visibility = View.VISIBLE
+                    btnEditar.visibility = View.VISIBLE
+                    btnEditarC.visibility = View.VISIBLE
                     btnFavorito.visibility = View.GONE
                     btnEliminar.setOnClickListener {
                         onDeleteClick(planta)
                     }
+                    btnEditar.setOnClickListener {
+                        onEditClick(planta)
+                    }
                 } else {
                     btnFavorito.visibility = View.VISIBLE
                     btnEliminar.visibility = View.GONE
+                    btnEditar.visibility = View.GONE
+                    btnEditarC.visibility = View.GONE
                 }
 
                 //Es favorito?
