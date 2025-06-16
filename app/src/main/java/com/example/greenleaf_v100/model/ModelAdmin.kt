@@ -10,5 +10,8 @@ data class ModelAdmin(
     val materno: String = "",
     val email: String = "",
     val password: String = "",
-    val tipoUsuario : String = "cliente"
+    val fechaNacimiento: String = "",
+    val domicilioFiscal: String = "",
+    val fotoUrl: String = "",
+    val tipoUsuario: String = "administrador"
 ) : Parcelable

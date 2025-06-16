@@ -4,7 +4,7 @@
     android:background="@color/white">
 
     <data>
-        <!-- Puedes enlazar tu ViewModel aquí si utilizas DataBinding -->
+        <!-- DataBinding si lo necesitas -->
     </data>
 
     <ScrollView
@@ -35,14 +35,12 @@
                 android:hint="Nombre"
                 app:errorEnabled="true"
                 android:paddingBottom="8dp">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFirstNameAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:background="@drawable/input_bg"/>
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido paterno -->
@@ -50,18 +48,16 @@
                 android:id="@+id/tilLastNamePatAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:hint="Apellido paterno"
+                android:layout_marginTop="8dp"
                 app:errorEnabled="true"
                 android:paddingBottom="8dp">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastNamePatAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:background="@drawable/input_bg"/>
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido materno -->
@@ -69,18 +65,16 @@
                 android:id="@+id/tilLastNameMatAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:hint="Apellido materno"
+                android:layout_marginTop="8dp"
                 app:errorEnabled="true"
-                android:paddingBottom="8dp">
-
+                android:paddingBottom="16dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastNameMatAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:background="@drawable/input_bg"/>
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Correo electrónico -->
@@ -88,18 +82,16 @@
                 android:id="@+id/tilEmailAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:hint="Correo electrónico"
+                android:layout_marginTop="8dp"
                 app:errorEnabled="true"
-                android:paddingBottom="8dp">
-
+                android:paddingBottom="16dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmailAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:background="@drawable/input_bg"/>
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Contraseña -->
@@ -107,20 +99,17 @@
                 android:id="@+id/tilPasswordAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:hint="Contraseña"
-                app:errorEnabled="true"
                 app:endIconMode="password_toggle"
+                app:errorEnabled="true"
                 app:errorIconDrawable="@null"
                 android:paddingBottom="16dp">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPasswordAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:background="@drawable/input_bg"/>
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Confirmar contraseña -->
@@ -128,21 +117,69 @@
                 android:id="@+id/tilConfirmPasswordAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:hint="Confirmar contraseña"
                 app:errorEnabled="true"
                 app:endIconMode="password_toggle"
                 app:errorIconDrawable="@null"
                 android:paddingBottom="16dp">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etConfirmPasswordAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:background="@drawable/input_bg"/>
-
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Fecha de nacimiento -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilFechaNacimientoAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha de nacimiento"
+                app:errorEnabled="true"
+                android:layout_marginTop="8dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFechaNacimientoAdmin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:background="@drawable/input_bg"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Domicilio fiscal -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDomicilioFiscalAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Domicilio fiscal"
+                app:errorEnabled="true"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="16dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDomicilioFiscalAdmin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPostalAddress"
+                    android:background="@drawable/input_bg"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Foto & vista previa -->
+            <Button
+                android:id="@+id/btnTakePhotoAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tomar fotografía"
+                android:backgroundTint="@color/verde_principal"
+                android:layout_marginBottom="8dp"/>
+            <ImageView
+                android:id="@+id/ivPhotoAdminPreview"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:background="@android:color/darker_gray"/>
 
             <!-- Botón Registrar -->
             <Button
@@ -150,7 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Registrar"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:backgroundTint="@color/verde_principal"/>
 
             <!-- Volver al Login -->
@@ -159,7 +196,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Volver al Login"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="@color/verde_principal"/>
 
         </LinearLayout>

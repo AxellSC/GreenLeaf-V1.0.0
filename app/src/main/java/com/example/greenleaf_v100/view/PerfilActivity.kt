@@ -17,33 +17,26 @@ import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ActivityPerfilBinding
 import com.example.greenleaf_v100.viewmodel.PerfilViewModel
 import com.example.greenleaf_v100.viewmodel.UserType
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.auth.FirebaseAuth
-
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class PerfilActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPerfilBinding
     private lateinit var viewModel: PerfilViewModel
 
-
-
-
-    // Launcher para elegir foto desde galería
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { resultado ->
-        if (resultado.resultCode == RESULT_OK) {
-            val uri = resultado.data?.data
-            if (uri != null) {
-                viewModel.actualizarFotoPerfil(uri) { exito, error ->
-                    if (exito) {
-                        Toast.makeText(this, "Foto actualizada", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, "Error: $error", Toast.LENGTH_LONG).show()
-                    }
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.data?.let { uri ->
+                viewModel.actualizarFotoPerfil(uri) { ok, err ->
+                    if (ok) Toast.makeText(this, "Foto actualizada", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(this, "Error: $err", Toast.LENGTH_LONG).show()
                 }
-            } else {
-                Toast.makeText(this, getString(R.string.photo_pick_error), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -58,235 +51,256 @@ class PerfilActivity : AppCompatActivity() {
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         )[PerfilViewModel::class.java]
 
-        observarLiveData()
-        configurarListeners()
-
-        val tipoUsuarioStr = intent.getStringExtra("TIPO_USUARIO")
-        val tipoUsuario = tipoUsuarioStr?.let { UserType.valueOf(it) }
-
-        if (tipoUsuario == UserType.ADMIN) {
-            // Mostrar opciones admin
-            binding.barraAdmin.selectedItemId = R.id.nav_perfil
-            binding.barraAdmin.visibility = View.VISIBLE
-            binding.barraCliente.visibility = View.INVISIBLE
-
-        } else if (tipoUsuario == UserType.CLIENTE){
-            binding.barraCliente.selectedItemId = R.id.nav_perfil
-            binding.barraCliente.visibility = View.VISIBLE
-            binding.barraAdmin.visibility = View.INVISIBLE
-        }
-
-        //Barra de navegacion Cliente
-
-        binding.barraCliente.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_inicio -> {
-                    val intent = Intent(this, CatalogoActivity::class.java)
-                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
-                    startActivity(intent)
-                    true
-                }
-                R.id.nav_carrito -> {
-                    val intent = Intent(this, CarritoActivity::class.java)
-                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
-                    startActivity(intent)
-                    true
-                }
-                R.id.nav_perfil -> {
-                    val intent = Intent(this, PerfilActivity::class.java)
-                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
-                    startActivity(intent)
-                    true
-                }
-                R.id.nav_favoritos -> {
-                    val intent = Intent(this, FavoritosActivity::class.java)
-                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
-                    startActivity(intent)
-                    true
-                }
-                else -> false
-            }
-        }
-        //Bara de Admin
-
-        binding.barraAdmin.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_inicio -> {
-                    val intent = Intent(this, CatalogoActivity::class.java)
-                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
-                    startActivity(intent)
-                    true
-                }
-                R.id.nav_ventas -> {
-                    val intent = Intent(this, VentasActivity::class.java)
-                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
-                    startActivity(intent)
-                    true
-                }
-                R.id.nav_perfil -> {
-                    val intent = Intent(this, PerfilActivity::class.java)
-                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
-                    startActivity(intent)
-                    true
-                }
-                else -> false
-            }
-        }
-
+        observeViewModel()
+        setupListeners()
+        setupNavBar()
     }
 
-    private fun observarLiveData() {
-        // 1) Nombre → tvGreeting
-        viewModel.userName.observe(this) { nombre ->
-            binding.tvGreeting.text = getString(R.string.hola_usuario, nombre)
+    private fun observeViewModel() {
+        viewModel.userName.observe(this) {
+            binding.tvGreeting.text = getString(R.string.hola_usuario, it)
         }
-
-        // 2) Correo → tvEmail
-        viewModel.email.observe(this) { correo ->
-            binding.tvEmail.text = correo
+        viewModel.email.observe(this) {
+            binding.tvEmail.text = it
         }
-
-        // 3) Rol → tvRole
-        viewModel.role.observe(this) { rol ->
-            binding.tvRole.text = rol
+        viewModel.role.observe(this) {
+            binding.tvRole.text = it
         }
-
-        // 4) Foto → ivProfile
         viewModel.photoUri.observe(this) { uri ->
-            if (uri != null) {
-                Glide.with(this)
-                    .load(uri)
-                    .circleCrop()
-                    .into(binding.ivProfile)
-            } else {
-                binding.ivProfile.setImageResource(R.drawable.usuario_foto)
-            }
+            if (uri != null) Glide.with(this).load(uri).circleCrop().into(binding.ivProfile)
+            else binding.ivProfile.setImageResource(R.drawable.usuario_foto)
         }
-
-        // 5) Contraseña “enmascarada” → tvPassword
-        viewModel.passwordMasked.observe(this) { masked ->
-            binding.tvPassword.text = masked
+        viewModel.passwordMasked.observe(this) {
+            binding.tvPassword.text = it
         }
-
-        // 6) Errores → mostrar Toast
-        viewModel.errorMessage.observe(this) { err ->
-            err?.let {
-                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-                // Ahora, en lugar de asignar errorMessage.value = null,
-                // llamamos al método público del ViewModel que lo limpia:
+        // extras:
+        viewModel.firstName.observe(this) {
+            binding.tvFirstName.text = it
+        }
+        viewModel.lastNamePat.observe(this) {
+            binding.tvLastNamePat.text = it
+        }
+        viewModel.lastNameMat.observe(this) {
+            binding.tvLastNameMat.text = it
+        }
+        viewModel.fechaNacimiento.observe(this) {
+            binding.tvFechaNacimiento.text = it
+        }
+        viewModel.domicilioFiscal.observe(this) {
+            binding.tvDomicilioFiscal.text = it
+        }
+        viewModel.errorMessage.observe(this) {
+            it?.let { msg ->
+                Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
                 viewModel.clearError()
             }
         }
     }
 
-    private fun configurarListeners() {
-        // ------------------------
-        // 1) Cambiar foto (FAB)
-        // ------------------------
+    private fun setupListeners() {
+        // cambiar foto
         binding.fabEditPhoto.setOnClickListener {
-            // Abrir galería
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            pickImageLauncher.launch(intent)
+            pickImageLauncher.launch(
+                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            )
         }
-
-        // ------------------------
-        // 2) Cambiar correo
-        // ------------------------
+        // cambiar correo
         binding.btnEditEmail.setOnClickListener {
-            mostrarDialogoCambioCorreo()
-        }
-
-        // ------------------------
-        // 3) Cambiar contraseña
-        // ------------------------
-        binding.btnEditPwd.setOnClickListener {
-            mostrarDialogoCambioPassword()
-        }
-
-        // ------------------------
-        // 4) Cerrar sesión
-        // ------------------------
-        binding.btnLogout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            // Volver a LoginActivity (asegúrate de que exista)
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
-    }
-
-    /**
-     * Muestra un AlertDialog que pide al usuario el NUEVO correo.
-     */
-    private fun mostrarDialogoCambioCorreo() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.change_email_title))
-
-        val input = EditText(this)
-        input.hint = getString(R.string.enter_new_email)
-        input.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-        builder.setView(input)
-
-        builder.setPositiveButton(getString(R.string.update)) { dialog, _ ->
-            val nuevoEmail = input.text.toString().trim()
-            if (nuevoEmail.isEmpty() ||
-                !android.util.Patterns.EMAIL_ADDRESS.matcher(nuevoEmail).matches()
-            ) {
-                binding.tvEmail.error = getString(R.string.error_invalid_email)
-            } else {
-                viewModel.actualizarCorreo(nuevoEmail) { exito, error ->
-                    if (exito) {
-                        Toast.makeText(this, "Correo actualizado", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, "Error: $error", Toast.LENGTH_LONG).show()
-                    }
+            showFieldDialog(
+                title = "Cambiar correo",
+                inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+                current = viewModel.email.value.orEmpty()
+            ) { new ->
+                viewModel.actualizarCorreo(new) { ok, err ->
+                    if (ok) Toast.makeText(this, "Correo actualizado", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(this, "Error: $err", Toast.LENGTH_LONG).show()
                 }
             }
-            dialog.dismiss()
         }
-        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-            dialog.cancel()
+        // cambiar contraseña
+        binding.btnEditPwd.setOnClickListener {
+            showPasswordDialog()
         }
-        builder.show()
+        // cambiar nombre
+        binding.btnEditFirstName.setOnClickListener {
+            showFieldDialog("Cambiar nombre", InputType.TYPE_CLASS_TEXT, viewModel.firstName.value.orEmpty()) { new ->
+                viewModel.actualizarCampo("nombre", new) { ok, err ->
+                    if (ok) Toast.makeText(this, "Nombre actualizado", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(this, "Error: $err", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        // apellido paterno
+        binding.btnEditLastNamePat.setOnClickListener {
+            showFieldDialog("Cambiar apellido paterno", InputType.TYPE_CLASS_TEXT, viewModel.lastNamePat.value.orEmpty()) { new ->
+                viewModel.actualizarCampo("paterno", new) { ok, err ->
+                    if (ok) Toast.makeText(this, "Apellido paterno actualizado", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(this, "Error: $err", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        // apellido materno
+        binding.btnEditLastNameMat.setOnClickListener {
+            showFieldDialog("Cambiar apellido materno", InputType.TYPE_CLASS_TEXT, viewModel.lastNameMat.value.orEmpty()) { new ->
+                viewModel.actualizarCampo("materno", new) { ok, err ->
+                    if (ok) Toast.makeText(this, "Apellido materno actualizado", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(this, "Error: $err", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        // fecha de nacimiento
+        binding.btnEditFechaNacimiento.setOnClickListener {
+            val picker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Selecciona fecha de nacimiento")
+                .build()
+            picker.show(supportFragmentManager, "DATEPICKER_PERFIL")
+            picker.addOnPositiveButtonClickListener { unix ->
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val str = sdf.format(Date(unix))
+                viewModel.actualizarCampo("fechaNacimiento", str) { ok, err ->
+                    if (ok) Toast.makeText(this, "Fecha actualizada", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(this, "Error: $err", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        // domicilio fiscal
+        binding.btnEditDomicilioFiscal.setOnClickListener {
+            showFieldDialog("Cambiar domicilio fiscal", InputType.TYPE_CLASS_TEXT, viewModel.domicilioFiscal.value.orEmpty()) { new ->
+                viewModel.actualizarCampo("domicilioFiscal", new) { ok, err ->
+                    if (ok) Toast.makeText(this, "Domicilio actualizado", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(this, "Error: $err", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        // eliminar registro
+        binding.btnDeleteAccount.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Eliminar registro")
+                .setMessage("¿Estás seguro de que deseas eliminar tu registro?")
+                .setPositiveButton("Sí") { _, _ ->
+                    viewModel.eliminarRegistro { ok, err ->
+                        if (ok) {
+                            Toast.makeText(this, "Registro eliminado", Toast.LENGTH_SHORT).show()
+                            viewModel.logout()
+                            startActivity(Intent(this, LoginActivity::class.java).apply {
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            })
+                        } else {
+                            Toast.makeText(this, "Error: $err", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+                .setNegativeButton("No", null)
+                .show()
+        }
+        // cerrar sesión
+        binding.btnLogout.setOnClickListener {
+            viewModel.logout()
+            startActivity(Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
+        }
     }
 
-    /**
-     * Muestra un AlertDialog con dos EditText:
-     *  - Contraseña actual (etCurrentPassword)
-     *  - Nueva contraseña (etNewPassword)
-     */
-    private fun mostrarDialogoCambioPassword() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_change_password, null)
-        val etActual = dialogView.findViewById<EditText>(R.id.etCurrentPassword)
-        val etNuevo = dialogView.findViewById<EditText>(R.id.etNewPassword)
+    private fun setupNavBar() {
+        val tipoStr = intent.getStringExtra("TIPO_USUARIO")
+        val tipo = tipoStr?.let { UserType.valueOf(it) }
+        if (tipo == UserType.ADMIN) {
+            binding.barraAdmin.visibility = View.VISIBLE
+            binding.barraAdmin.selectedItemId = R.id.nav_perfil
+            binding.barraCliente.visibility = View.INVISIBLE
+        } else {
+            binding.barraCliente.visibility = View.VISIBLE
+            binding.barraCliente.selectedItemId = R.id.nav_perfil
+            binding.barraAdmin.visibility = View.INVISIBLE
+        }
+        binding.barraCliente.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_inicio -> navigateCatalogo(tipo)
+                R.id.nav_carrito -> navigateCarrito(tipo)
+                R.id.nav_perfil -> true
+                R.id.nav_favoritos -> navigateFavoritos(tipo)
+                else -> false
+            }
+        }
+        binding.barraAdmin.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_inicio -> navigateCatalogo(tipo)
+                R.id.nav_ventas -> navigateVentas(tipo)
+                R.id.nav_perfil -> true
+                else -> false
+            }
+        }
+    }
 
-        val builder = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.change_password_title))
-            .setView(dialogView)
-            .setPositiveButton(getString(R.string.update)) { dialog, _ ->
-                val actual = etActual.text.toString()
-                val nuevo = etNuevo.text.toString()
-                if (actual.isEmpty() || nuevo.length < 6) {
-                    if (actual.isEmpty()) {
-                        etActual.error = getString(R.string.error_invalid_password)
-                    }
-                    if (nuevo.length < 6) {
-                        etNuevo.error = getString(R.string.error_invalid_password)
-                    }
+    private fun navigateCatalogo(tipo: UserType?) = startActivity(
+        Intent(this, CatalogoActivity::class.java)
+            .putExtra("TIPO_USUARIO", tipo?.name)
+    ).let { true }
+
+    private fun navigateCarrito(tipo: UserType?) = startActivity(
+        Intent(this, CarritoActivity::class.java)
+            .putExtra("TIPO_USUARIO", tipo?.name)
+    ).let { true }
+
+    private fun navigateFavoritos(tipo: UserType?) = startActivity(
+        Intent(this, FavoritosActivity::class.java)
+            .putExtra("TIPO_USUARIO", tipo?.name)
+    ).let { true }
+
+    private fun navigateVentas(tipo: UserType?) = startActivity(
+        Intent(this, VentasActivity::class.java)
+            .putExtra("TIPO_USUARIO", tipo?.name)
+    ).let { true }
+
+    private fun showFieldDialog(
+        title: String,
+        inputType: Int,
+        current: String,
+        onConfirm: (String) -> Unit
+    ) {
+        val builder = AlertDialog.Builder(this).setTitle(title)
+        val input = EditText(this).apply {
+            hint = title
+            setText(current)
+            this.inputType = inputType
+        }
+        builder.setView(input)
+            .setPositiveButton("OK") { dialog, _ ->
+                val text = input.text.toString().trim()
+                if (text.isEmpty()) {
+                    input.error = "$title no puede quedar vacío"
                 } else {
-                    viewModel.actualizarContrasena(actual, nuevo) { exito, error ->
-                        if (exito) {
-                            Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(this, "Error: $error", Toast.LENGTH_LONG).show()
-                        }
+                    onConfirm(text)
+                    dialog.dismiss()
+                }
+            }
+            .setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+    private fun showPasswordDialog() {
+        val view = layoutInflater.inflate(R.layout.dialog_change_password, null)
+        val etCurrent = view.findViewById<EditText>(R.id.etCurrentPassword)
+        val etNew = view.findViewById<EditText>(R.id.etNewPassword)
+        AlertDialog.Builder(this)
+            .setTitle("Cambiar contraseña")
+            .setView(view)
+            .setPositiveButton("OK") { dialog, _ ->
+                val curr = etCurrent.text.toString()
+                val nw = etNew.text.toString()
+                if (curr.isBlank() || nw.length < 6) {
+                    if (curr.isBlank()) etCurrent.error = "Requerido"
+                    if (nw.length < 6) etNew.error = "Mínimo 6 caracteres"
+                } else {
+                    viewModel.actualizarContrasena(curr, nw) { ok, err ->
+                        if (ok) Toast.makeText(this, "Contraseña actualizada", Toast.LENGTH_SHORT).show()
+                        else Toast.makeText(this, "Error: $err", Toast.LENGTH_LONG).show()
                     }
                     dialog.dismiss()
                 }
             }
-            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-                dialog.cancel()
-            }
-        builder.show()
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 }

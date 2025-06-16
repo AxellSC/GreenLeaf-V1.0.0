@@ -8,90 +8,172 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class PerfilViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val auth = FirebaseAuth.getInstance()
+    private val auth      = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
-    private val storage = FirebaseStorage.getInstance()
+    private val storage   = FirebaseStorage.getInstance()
 
-    // LiveData para nombre (para “Bienvenido NombreUsuario!”)
-    private val _userName = MutableLiveData<String>()
+    // ─── LiveData básicos ─────────────────────────────────────────────────────
+    private val _userName       = MutableLiveData<String>()
     val userName: LiveData<String> = _userName
 
-    // LiveData para correo
-    private val _email = MutableLiveData<String>()
+    private val _email          = MutableLiveData<String>()
     val email: LiveData<String> = _email
 
-    // LiveData para rol (“Cliente” / “Administrador”)
-    private val _role = MutableLiveData<String>()
+    private val _role           = MutableLiveData<String>()
     val role: LiveData<String> = _role
 
-    // LiveData para foto de perfil (URI)
-    private val _photoUri = MutableLiveData<Uri?>()
+    private val _photoUri       = MutableLiveData<Uri?>()
     val photoUri: LiveData<Uri?> = _photoUri
 
-    // LiveData para contraseña encriptada (simplemente “********”)
     private val _passwordMasked = MutableLiveData<String>()
     val passwordMasked: LiveData<String> = _passwordMasked
 
-    // LiveData para mensajes de error
-    private val _errorMessage = MutableLiveData<String?>()
+    private val _errorMessage   = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
-    fun clearError() {
-        _errorMessage.value = null
-    }
+    // ─── LiveData extras (cliente/admin) ───────────────────────────────────────
+    private val _firstName        = MutableLiveData<String>()
+    val firstName: LiveData<String> = _firstName
+
+    private val _lastNamePat      = MutableLiveData<String>()
+    val lastNamePat: LiveData<String> = _lastNamePat
+
+    private val _lastNameMat      = MutableLiveData<String>()
+    val lastNameMat: LiveData<String> = _lastNameMat
+
+    private val _fechaNacimiento  = MutableLiveData<String>()
+    val fechaNacimiento: LiveData<String> = _fechaNacimiento
+
+    private val _domicilioFiscal  = MutableLiveData<String>()
+    val domicilioFiscal: LiveData<String> = _domicilioFiscal
+
     init {
         cargarDatosUsuario()
     }
 
+    /** Limpia mensaje de error. */
+    fun clearError() {
+        _errorMessage.value = null
+    }
+
+    /** Carga todos los datos del usuario desde Auth y Firestore. */
     private fun cargarDatosUsuario() {
         val user = auth.currentUser ?: run {
             _errorMessage.value = "Usuario no autenticado"
             return
         }
+        val uid = user.uid
 
-        // Correo
-        _email.value = user.email ?: ""
+        // 1) Email y contraseña enmascarada
+        _email.value          = user.email ?: ""
+        _passwordMasked.value = "********"
 
-        // Nombre (si existe en displayName, sino en Firestore “users/{uid}.name”)
-        if (!user.displayName.isNullOrBlank()) {
-            _userName.value = user.displayName!!
-        } else {
-            firestore.collection("users")
-                .document(user.uid)
-                .get()
-                .addOnSuccessListener { doc ->
-                    _userName.value = doc.getString("name") ?: ""
-                }
-                .addOnFailureListener {
-                    _userName.value = ""
-                }
-        }
+        // 2) Foto de perfil
+        _photoUri.value = user.photoUrl
 
-        // Rol (Firestore: users/{uid}.role)
-        firestore.collection("users")
-            .document(user.uid)
+        // 3) Intentamos cargar como cliente…
+        firestore.collection("clientes")
+            .document(uid)
             .get()
             .addOnSuccessListener { doc ->
-                _role.value = doc.getString("role") ?: "Cliente"
+                if (doc.exists()) {
+                    poblarDesdeDocumento(doc.getData()!!)
+                    _role.value = "Cliente"
+                } else {
+                    // …si no existe, lo cargamos como admin
+                    firestore.collection("admins")
+                        .document(uid)
+                        .get()
+                        .addOnSuccessListener { doc2 ->
+                            if (doc2.exists()) {
+                                poblarDesdeDocumento(doc2.getData()!!)
+                                _role.value = "Administrador"
+                            } else {
+                                _errorMessage.value = "Perfil no encontrado en Firestore"
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            _errorMessage.value = e.localizedMessage
+                        }
+                }
             }
-            .addOnFailureListener {
-                _role.value = "Cliente"
+            .addOnFailureListener { e ->
+                _errorMessage.value = e.localizedMessage
             }
+    }
 
-        // Foto de perfil (si en FirebaseAuth hay photoUrl, la usamos)
-        if (user.photoUrl != null) {
-            _photoUri.value = user.photoUrl
-        } else {
-            _photoUri.value = null
+    /** Pobla los LiveData a partir del mapa de Firestore. */
+    private fun poblarDesdeDocumento(data: Map<String, Any>) {
+        _firstName.value       = data["nombre"]          as? String? ?: ""
+        _lastNamePat.value     = data["paterno"]         as? String? ?: ""
+        _lastNameMat.value     = data["materno"]         as? String? ?: ""
+        _fechaNacimiento.value = data["fechaNacimiento"] as? String? ?: ""
+        _domicilioFiscal.value = data["domicilioFiscal"] as? String? ?: ""
+        // Para el saludo usamos el firstName
+        _userName.value        = _firstName.value ?: ""
+    }
+
+    // ─── Actualizaciones de datos ──────────────────────────────────────────────
+
+    /**
+     * Actualiza un campo de perfil en Firestore y refresca el LiveData correspondiente.
+     *
+     * @param campo  Nombre del campo en Firestore ("nombre", "paterno", etc.).
+     * @param valor  Nuevo valor para ese campo.
+     */
+    fun actualizarCampo(
+        campo: String,
+        valor: String,
+        onComplete: (Boolean, String?) -> Unit
+    ) {
+        val user = auth.currentUser ?: run {
+            onComplete(false, "No autenticado")
+            return
         }
+        val colec = if (_role.value == "Cliente") "clientes" else "admins"
+        firestore.collection(colec)
+            .document(user.uid)
+            .update(campo, valor)
+            .addOnSuccessListener {
+                // Refrescar el LiveData modificado
+                when (campo) {
+                    "nombre"          -> _firstName.value       = valor
+                    "paterno"         -> _lastNamePat.value     = valor
+                    "materno"         -> _lastNameMat.value     = valor
+                    "fechaNacimiento" -> _fechaNacimiento.value = valor
+                    "domicilioFiscal" -> _domicilioFiscal.value = valor
+                }
+                onComplete(true, null)
+            }
+            .addOnFailureListener { e ->
+                onComplete(false, e.localizedMessage)
+            }
+    }
 
-        // Contraseña (no la obtenemos textualmente, solo mostramos “********”)
-        _passwordMasked.value = "********"
+    /**
+     * Elimina lógicamente el registro estableciendo “deleted” = true.
+     */
+    fun eliminarRegistro(onComplete: (Boolean, String?) -> Unit) {
+        val user = auth.currentUser ?: run {
+            onComplete(false, "No autenticado")
+            return
+        }
+        val colec = if (_role.value == "Cliente") "clientes" else "admins"
+        firestore.collection(colec)
+            .document(user.uid)
+            .update("deleted", true)
+            .addOnSuccessListener {
+                onComplete(true, null)
+            }
+            .addOnFailureListener { e ->
+                onComplete(false, e.localizedMessage)
+            }
     }
 
     /**
@@ -102,11 +184,10 @@ class PerfilViewModel(application: Application) : AndroidViewModel(application) 
             onComplete(false, "No autenticado")
             return
         }
-
         user.updateEmail(nuevoEmail)
             .addOnSuccessListener {
-                // Actualizar en Firestore (opcional, si guardas email allí)
-                firestore.collection("users")
+                val colec = if (_role.value == "Cliente") "clientes" else "admins"
+                firestore.collection(colec)
                     .document(user.uid)
                     .update("email", nuevoEmail)
                 _email.value = nuevoEmail
@@ -118,9 +199,13 @@ class PerfilViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     /**
-     * Re-autentica con la contraseña actual y luego actualiza a la nueva contraseña.
+     * Re-autentica con la contraseña actual y luego actualiza a la nueva.
      */
-    fun actualizarContrasena(actual: String, nuevo: String, onComplete: (Boolean, String?) -> Unit) {
+    fun actualizarContrasena(
+        actual: String,
+        nuevo: String,
+        onComplete: (Boolean, String?) -> Unit
+    ) {
         val user = auth.currentUser ?: run {
             onComplete(false, "No autenticado")
             return
@@ -143,24 +228,23 @@ class PerfilViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     /**
-     * Sube la imagen seleccionada a Storage y actualiza photoUrl en FirebaseAuth.
+     * Sube la imagen a Storage y actualiza el photoUrl en FirebaseAuth.
      */
     fun actualizarFotoPerfil(uriLocal: Uri, onComplete: (Boolean, String?) -> Unit) {
         val user = auth.currentUser ?: run {
             onComplete(false, "No autenticado")
             return
         }
-        val uid = user.uid
+        val uid        = user.uid
         val storageRef = storage.reference.child("users/$uid/profile.jpg")
-
         storageRef.putFile(uriLocal)
             .addOnSuccessListener {
                 storageRef.downloadUrl
                     .addOnSuccessListener { descargaUri ->
-                        val request = UserProfileChangeRequest.Builder()
+                        val req = UserProfileChangeRequest.Builder()
                             .setPhotoUri(descargaUri)
                             .build()
-                        user.updateProfile(request)
+                        user.updateProfile(req)
                             .addOnSuccessListener {
                                 _photoUri.value = descargaUri
                                 onComplete(true, null)
