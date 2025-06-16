@@ -58,7 +58,8 @@ dependencies {
     //ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     //Livedata
-    implementation(libs.androidx.lifecycle.livedata.ktx)
+    //implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.activity.ktx)
 
     //RecyclerView

@@ -39,9 +39,6 @@ class CarritoClienteActivity : AppCompatActivity() {
                 viewModel.cartItems.observe(this) { list ->
                     adapter.submitList(list)
                 }
-                viewModel.total.observe(this) { sum ->
-                    binding.tvTotal.text = "$$sum"
-                }
             }
     }
 }

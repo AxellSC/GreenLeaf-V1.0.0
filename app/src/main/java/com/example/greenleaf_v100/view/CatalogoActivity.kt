@@ -89,7 +89,7 @@ class CatalogoActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_carrito -> {
-                    val intent = Intent(this, CarritoClienteActivity::class.java)
+                    val intent = Intent(this, CarritoActivity::class.java)
                     intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
                     startActivity(intent)
                     true
@@ -173,6 +173,7 @@ class CatalogoActivity : AppCompatActivity() {
                     putExtra("RIEGO", planta.riego)
                     putExtra("CONSEJO", planta.consejo)
                     putExtra("STOCK", planta.stock)
+                    putExtra("PRECIO",planta.precio)
                 }
                 startActivity(intent)
             },

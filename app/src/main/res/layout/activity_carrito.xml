@@ -8,20 +8,52 @@
     android:background="@color/grayBackground"
     tools:context=".view.CarritoActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reciclerCarrito"
+        android:layout_width="match_parent"
+        android:layout_height="438dp"
+        app:layout_constraintBottom_toTopOf="@id/btnComprar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.107" />
+
+    <Button
+        android:id="@+id/btnComprar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comprar"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@id/barraCliente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Total: $0.00"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnComprar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/barraCliente"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:visibility="visible"
         app:itemIconTint="@color/greenA"
         app:itemRippleColor="@color/greenA"
         app:itemTextColor="@color/grayText"
         app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_cliente"
-        tools:layout_editor_absoluteX="-4dp"
-        android:visibility="visible"
-        android:background="@color/white"/>
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
