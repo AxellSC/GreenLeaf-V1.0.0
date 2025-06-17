@@ -237,6 +237,7 @@
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
             android:text="Seleccionar Imagen"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivPreview" />
@@ -261,6 +262,7 @@
             android:padding="10dp"
             android:textColor="@color/white"
             android:text="Agregar Planta"
+            android:textSize="15sp"
             android:background="@drawable/button_round"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
