@@ -96,9 +96,9 @@ class RegistroClientesActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val txt = s?.toString().orEmpty()
                 when (currentFocus?.id) {
-                    binding.etFirstName.id -> binding.tilFirstName.error   = if (txt.isBlank()) "Requerido" else null
-                    binding.etLastNamePat.id -> binding.tilLastNamePat.error = if (txt.isBlank()) "Requerido" else null
-                    binding.etLastNameMat.id -> binding.tilLastNameMat.error = if (txt.isBlank()) "Requerido" else null
+                    binding.etFirstName.id -> binding.tilFirstName.error   = if (txt.isBlank()) "Por favor, completa este campo" else null
+                    binding.etLastNamePat.id -> binding.tilLastNamePat.error = if (txt.isBlank()) "Por favor, completa este campo" else null
+                    binding.etLastNameMat.id -> binding.tilLastNameMat.error = if (txt.isBlank()) "Por favor, completa este campo" else null
                 }
             }
             override fun beforeTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
@@ -113,7 +113,7 @@ class RegistroClientesActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val email = s.toString().trim()
                 binding.tilEmailReg.error = when {
-                    email.isEmpty() -> "Requerido"
+                    email.isEmpty() -> "Por favor, completa este campo"
                     !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
                             || !email.endsWith(".com", ignoreCase = true)
                         -> "Correo inválido (ej: usuario@dominio.com)"
@@ -130,8 +130,8 @@ class RegistroClientesActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val pwd = s.toString()
                 binding.tilPassword.error = when {
-                    pwd.isEmpty()                          -> "Requerido"
-                    !pwdPattern.matcher(pwd).matches()     -> "8+ chars, 1 número y 1 especial"
+                    pwd.isEmpty()                          -> "Por favor, completa este campo"
+                    !pwdPattern.matcher(pwd).matches()     -> "Ingresa minimo 8 caracteres, 1 número y 1 especial"
                     else                                   -> null
                 }
             }
@@ -145,7 +145,7 @@ class RegistroClientesActivity : AppCompatActivity() {
                 val confirm = s?.toString().orEmpty()
                 val original = binding.etPassword.text.toString()
                 binding.tilConfirmPassword.error = when {
-                    confirm.isEmpty()      -> "Requerido"
+                    confirm.isEmpty()      -> "Por favor, completa este campo"
                     confirm != original    -> "No coincide"
                     else                   -> null
                 }
@@ -158,7 +158,7 @@ class RegistroClientesActivity : AppCompatActivity() {
         binding.etFechaNacimiento.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 binding.tilFechaNacimiento.error =
-                    if (s.isNullOrBlank()) "Requerido" else null
+                    if (s.isNullOrBlank()) "Por favor, completa este campo" else null
             }
             override fun beforeTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
             override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
@@ -168,7 +168,7 @@ class RegistroClientesActivity : AppCompatActivity() {
         binding.etDomicilioFiscal.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 binding.tilDomicilioFiscal.error =
-                    if (s.isNullOrBlank()) "Requerido" else null
+                    if (s.isNullOrBlank()) "Por favor, completa este campo" else null
             }
             override fun beforeTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
             override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}

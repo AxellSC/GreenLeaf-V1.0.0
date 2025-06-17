@@ -20,10 +20,10 @@
     <string name="change_email_title">Actualizar correo</string>
     <string name="change_password_title">Actualizar contraseña</string>
     <string name="enter_new_email">Ingresa tu nuevo correo</string>
-    <string name="enter_new_password">Ingresa tu nueva contraseña</string>
+    <string name="enter_new_password">Contraseña nueva</string>
     <string name="cancel">Cancelar</string>
     <string name="update">Actualizar</string>
-    <string name="enter_current_password">Ingresa tu contraseña actual</string>
+    <string name="enter_current_password">Contraseña actual</string>
 
 
 </resources>

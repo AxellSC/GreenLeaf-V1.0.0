@@ -95,9 +95,9 @@ class RegistroAdminActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val t = s.toString().trim()
                 when (currentFocus?.id) {
-                    binding.etFirstNameAdmin.id   -> binding.tilFirstNameAdmin.error   = if (t.isEmpty()) "Requerido" else null
-                    binding.etLastNamePatAdmin.id -> binding.tilLastNamePatAdmin.error = if (t.isEmpty()) "Requerido" else null
-                    binding.etLastNameMatAdmin.id -> binding.tilLastNameMatAdmin.error = if (t.isEmpty()) "Requerido" else null
+                    binding.etFirstNameAdmin.id   -> binding.tilFirstNameAdmin.error   = if (t.isEmpty()) "Por favor, completa este campo" else null
+                    binding.etLastNamePatAdmin.id -> binding.tilLastNamePatAdmin.error = if (t.isEmpty()) "Por favor, completa este campo" else null
+                    binding.etLastNameMatAdmin.id -> binding.tilLastNameMatAdmin.error = if (t.isEmpty()) "Por favor, completa este campo" else null
                 }
             }
             override fun beforeTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
@@ -112,7 +112,7 @@ class RegistroAdminActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val mail = s.toString().trim()
                 binding.tilEmailAdmin.error = when {
-                    mail.isEmpty() -> "Requerido"
+                    mail.isEmpty() -> "Por favor, completa este campo"
                     !android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()
                             || !mail.endsWith(".com", ignoreCase = true)
                         -> "Correo inválido"
@@ -129,9 +129,9 @@ class RegistroAdminActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val pwd = s.toString()
                 binding.tilPasswordAdmin.error = when {
-                    pwd.isEmpty()                 -> "Requerido"
+                    pwd.isEmpty()                 -> "Por favor, completa este campo"
                     !pwdPattern.matcher(pwd).matches()
-                        -> "8+ chars, 1 número y 1 especial"
+                        -> "Ingresa minimo 8 caracteres, 1 número y 1 especial"
                     else -> null
                 }
             }
@@ -145,7 +145,7 @@ class RegistroAdminActivity : AppCompatActivity() {
                 val c = s.toString()
                 val o = binding.etPasswordAdmin.text.toString()
                 binding.tilConfirmPasswordAdmin.error = when {
-                    c.isEmpty()    -> "Requerido"
+                    c.isEmpty()    -> "Por favor, completa este campo"
                     c != o         -> "No coincide"
                     else -> null
                 }
@@ -158,7 +158,7 @@ class RegistroAdminActivity : AppCompatActivity() {
         binding.etFechaNacimientoAdmin.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 binding.tilFechaNacimientoAdmin.error =
-                    if (s.isNullOrBlank()) "Requerido" else null
+                    if (s.isNullOrBlank()) "Por favor, completa este campo" else null
             }
             override fun beforeTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
             override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
@@ -168,7 +168,7 @@ class RegistroAdminActivity : AppCompatActivity() {
         binding.etDomicilioFiscalAdmin.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 binding.tilDomicilioFiscalAdmin.error =
-                    if (s.isNullOrBlank()) "Requerido" else null
+                    if (s.isNullOrBlank()) "Por favor, completa este campo" else null
             }
             override fun beforeTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
             override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
