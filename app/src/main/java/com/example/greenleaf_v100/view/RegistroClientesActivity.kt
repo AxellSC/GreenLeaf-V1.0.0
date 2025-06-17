@@ -12,12 +12,14 @@ import android.provider.Settings
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.greenleaf_v100.R
 import com.example.greenleaf_v100.databinding.ActivityRegistroClientesBinding
 import com.example.greenleaf_v100.viewmodel.RegistroClientesViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -34,10 +36,13 @@ class RegistroClientesActivity : AppCompatActivity() {
     private val REQUEST_IMAGE_CAPTURE = 101
     private var photoBitmap: Bitmap?  = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistroClientesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         // 1) Validaciones en tiempo real
         installValidation()
@@ -77,7 +82,16 @@ class RegistroClientesActivity : AppCompatActivity() {
                 dispatchTakePictureIntent()
             }
         }
+
+        binding.tvBackToLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish() // opcional: cerrar esta pantalla para que no regrese con "atrás"
+        }
+
     }
+
+
 
     private fun installValidation() {
         // 1) Nombre/apellidos sólo letras
