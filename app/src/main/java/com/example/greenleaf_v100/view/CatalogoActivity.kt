@@ -73,6 +73,7 @@ class CatalogoActivity : AppCompatActivity() {
         cargarPlantas()
         setupSearchView()
         setupSortButton()
+        setupFiltros()
 
         binding.btnAgregarPlanta.setOnClickListener{
             val intent = Intent(this, FormActivity::class.java)
@@ -136,7 +137,7 @@ class CatalogoActivity : AppCompatActivity() {
         }
 
 
-       // binding.bottomNavigationView.selectedItemId = R.id.nav_inicio
+
 
         binding.cardViewRandom.setOnClickListener {
             plantaDestacada?.let { planta ->
@@ -348,6 +349,7 @@ class CatalogoActivity : AppCompatActivity() {
             }
         }
 
+
         plantasList.clear()
         plantasList.addAll(filteredList)
         adapter.notifyDataSetChanged()
@@ -431,5 +433,41 @@ class CatalogoActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
+
+    private fun setupFiltros() {
+        binding.btnFiltroRiegoBajo.setOnClickListener {
+            val filtradas = plantasListFull.filter { it.riego.equals("bajo", ignoreCase = true) }
+            adapter.actualizarLista(filtradas)
+        }
+
+        binding.btnFiltroRiegoAlto.setOnClickListener {
+            val filtradas = plantasListFull.filter { it.riego.equals("alto", ignoreCase = true) }
+            adapter.actualizarLista(filtradas)
+        }
+
+        binding.btnFiltroInterior.setOnClickListener {
+            val filtradas = plantasListFull.filter { it.estancia.equals("interior", ignoreCase = true) }
+            adapter.actualizarLista(filtradas)
+        }
+
+        binding.btnFiltroExterior.setOnClickListener {
+            val filtradas = plantasListFull.filter { it.estancia.equals("exterior", ignoreCase = true) }
+            adapter.actualizarLista(filtradas)
+        }
+
+        binding.btnFiltroSol.setOnClickListener {
+            val filtradas = plantasListFull.filter { it.tipo.equals("sol", ignoreCase = true) }
+            adapter.actualizarLista(filtradas)
+        }
+        binding.btnFiltroSombra.setOnClickListener {
+            val filtradas = plantasListFull.filter { it.tipo.equals("sombra", ignoreCase = true) }
+            adapter.actualizarLista(filtradas)
+        }
+        binding.btnFiltroSombra.setOnClickListener {
+            val filtradas = plantasListFull.filter { it.tipo.equals("sombra parcial", ignoreCase = true) }
+            adapter.actualizarLista(filtradas)
+        }
+    }
+
 
 }
