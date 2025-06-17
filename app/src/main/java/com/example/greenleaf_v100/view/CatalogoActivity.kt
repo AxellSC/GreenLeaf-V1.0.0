@@ -114,7 +114,9 @@ class CatalogoActivity : AppCompatActivity() {
         binding.barraAdmin.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_inicio -> {
-                    // Ya estás en esta Activity
+                    val intent = Intent(this, CatalogoActivity::class.java)
+                    intent.putExtra("TIPO_USUARIO", tipoUsuario?.name)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_ventas -> {
