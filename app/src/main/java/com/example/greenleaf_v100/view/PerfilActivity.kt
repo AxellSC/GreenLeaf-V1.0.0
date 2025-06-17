@@ -54,6 +54,8 @@ class PerfilActivity : AppCompatActivity() {
         observeViewModel()
         setupListeners()
         setupNavBar()
+
+
     }
 
     private fun observeViewModel() {
@@ -303,4 +305,5 @@ class PerfilActivity : AppCompatActivity() {
             .setNegativeButton("Cancelar", null)
             .show()
     }
+
 }

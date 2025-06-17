@@ -3,6 +3,7 @@ package com.example.greenleaf_v100.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -37,6 +38,7 @@ class CarritoActivity : AppCompatActivity() {
 
         val tipoUsuarioStr = intent.getStringExtra("TIPO_USUARIO")
         val tipoUsuario = tipoUsuarioStr?.let { UserType.valueOf(it) }
+
 
         if (tipoUsuario == UserType.CLIENTE) {
             // Mostrar opciones admin
@@ -113,6 +115,10 @@ class CarritoActivity : AppCompatActivity() {
         // Implementar lógica de compra
         cartViewModel.clearCart()
         Toast.makeText(this, "Compra realizada con éxito", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, OrdenConfirmadaActivity::class.java)
+        startActivity(intent)
+
         finish()
     }
 

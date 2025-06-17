@@ -41,6 +41,8 @@
         <activity
             android:name=".view.CarritoActivity"
             android:exported="false" />
+        <activity android:name=".view.OrdenConfirmadaActivity"
+            android:exported="false"/>
         <activity
             android:name=".view.VentasActivity"
             android:exported="false" />

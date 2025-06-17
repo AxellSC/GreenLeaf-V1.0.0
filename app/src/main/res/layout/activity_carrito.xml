@@ -23,8 +23,9 @@
         android:id="@+id/btnComprar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Comprar"
+        android:text="Enviar Orden"
         android:layout_margin="16dp"
+        android:backgroundTint="@color/verde_principal"
         app:layout_constraintBottom_toTopOf="@id/barraCliente"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
