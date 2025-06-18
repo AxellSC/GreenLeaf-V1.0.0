@@ -21,6 +21,7 @@ import com.example.greenleaf_v100.model.CartItem
 import com.example.greenleaf_v100.viewmodel.CarritoViewModel
 import com.example.greenleaf_v100.viewmodel.UserType
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class CarritoActivity : AppCompatActivity() {
 
@@ -112,14 +113,48 @@ class CarritoActivity : AppCompatActivity() {
     }
 
     private fun realizarCompra() {
-        // Implementar lógica de compra
-        cartViewModel.clearCart()
-        Toast.makeText(this, "Compra realizada con éxito", Toast.LENGTH_SHORT).show()
+        val user = FirebaseAuth.getInstance().currentUser
+        val uid = user?.uid ?: return
+        val userEmail = user.email ?: ""
 
-        val intent = Intent(this, OrdenConfirmadaActivity::class.java)
-        startActivity(intent)
+        // Obtener los items del carrito
+        val items = adapter.currentList
 
-        finish()
+        // Crear objeto Pedido
+        val pedido = hashMapOf(
+            "clienteId" to uid,
+            "clienteEmail" to userEmail,
+            "items" to items.map {
+                hashMapOf(
+                    "plantaId" to it.id,
+                    "nombre" to it.name,
+                    "precio" to it.price,
+                    "cantidad" to it.quantity,
+                    "imagenUrl" to it.imageUrl
+                )
+            },
+            "fecha" to System.currentTimeMillis(),
+            "estado" to "pendiente", // pendiente, entregado, cancelado
+            "direccion" to "Dirección del cliente" // Deberías obtener esto de la base de datos
+        )
+
+        // Guardar en Firebase
+        FirebaseFirestore.getInstance().collection("pedidos")
+            .add(pedido)
+            .addOnSuccessListener {
+                cartViewModel.clearCart()
+                Toast.makeText(this, "Compra realizada con éxito", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, OrdenConfirmadaActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "Error al realizar la compra: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 
 }

@@ -11,9 +11,8 @@
         android:maxSdkVersion="32"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.camera.front"
@@ -22,8 +21,7 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -36,13 +34,17 @@
         android:theme="@style/Theme.GreenLeaf_V100"
         tools:targetApi="31">
         <activity
+            android:name=".view.DetallePedidoActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.CarritoClienteActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".view.CarritoActivity"
             android:exported="false" />
-        <activity android:name=".view.OrdenConfirmadaActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".view.OrdenConfirmadaActivity"
+            android:exported="false" />
         <activity
             android:name=".view.VentasActivity"
             android:exported="false" />
@@ -78,8 +80,8 @@
             android:exported="false" />
         <activity
             android:name=".view.CatalogoActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".view.FormActivity"
             android:exported="false" />
