@@ -51,6 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Correo electrónico"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 app:errorEnabled="true"
                 android:paddingBottom="8dp">
 
@@ -58,8 +60,9 @@
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/input_bg"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Contraseña -->
@@ -69,6 +72,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Contraseña"
                 android:layout_marginTop="8dp"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 app:errorEnabled="true"
                 app:endIconMode="password_toggle"
                 app:errorIconDrawable="@null"
@@ -79,7 +84,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:background="@drawable/input_bg"/>
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Entrar -->

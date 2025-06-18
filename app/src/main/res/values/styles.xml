@@ -30,4 +30,8 @@
         <item name="android:background">#FFFFFF</item> <!-- blanco -->
     </style>
 
+    <style name="Widget.GreenLeaf.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">@color/greenA</item>
+    </style>
+
 </resources>

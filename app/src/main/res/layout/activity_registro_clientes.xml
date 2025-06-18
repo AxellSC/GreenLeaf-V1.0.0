@@ -32,6 +32,8 @@
                 android:id="@+id/tilFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 android:hint="Nombre"
                 app:errorEnabled="true"
                 android:paddingBottom="8dp">
@@ -40,7 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:background="@drawable/input_bg"/>
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido paterno -->
@@ -49,6 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Apellido paterno"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 android:layout_marginTop="8dp"
                 app:errorEnabled="true"
                 android:paddingBottom="8dp">
@@ -57,7 +62,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:background="@drawable/input_bg"/>
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Apellido materno -->
@@ -66,6 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Apellido materno"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 android:layout_marginTop="8dp"
                 app:errorEnabled="true"
                 android:paddingBottom="8dp">
@@ -74,7 +82,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:background="@drawable/input_bg"/>
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Correo electrónico -->
@@ -83,6 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Correo electrónico"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 android:layout_marginTop="16dp"
                 app:errorEnabled="true"
                 android:paddingBottom="8dp">
@@ -91,7 +102,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:background="@drawable/input_bg"/>
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Contraseña -->
@@ -101,6 +113,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Contraseña"
                 android:layout_marginTop="8dp"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 app:errorEnabled="true"
                 app:endIconMode="password_toggle"
                 app:errorIconDrawable="@null"
@@ -110,7 +124,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:background="@drawable/input_bg"/>
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Confirmar contraseña -->
@@ -121,6 +136,8 @@
                 android:hint="Confirmar contraseña"
                 android:layout_marginTop="8dp"
                 app:errorEnabled="true"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 app:endIconMode="password_toggle"
                 app:errorIconDrawable="@null"
                 android:paddingBottom="16dp">
@@ -129,13 +146,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:background="@drawable/input_bg"/>
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal"/>
             </com.google.android.material.textfield.TextInputLayout>
             <!-- Fecha de nacimiento -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilFechaNacimiento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 android:hint="Fecha de nacimiento"
                 app:errorEnabled="true"
                 android:layout_marginTop="16dp">
@@ -145,7 +165,8 @@
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     android:clickable="true"
-                    android:background="@drawable/input_bg"/>
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Domicilio fiscal -->
@@ -153,6 +174,8 @@
                 android:id="@+id/tilDomicilioFiscal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 android:hint="Domicilio fiscal"
                 app:errorEnabled="true"
                 android:layout_marginTop="8dp">
@@ -161,7 +184,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPostalAddress"
-                    android:background="@drawable/input_bg"/>
+                    android:textColor="@color/verde_principal"
+                    android:textColorHint="@color/verde_principal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Foto & vista previa -->
@@ -169,6 +193,8 @@
                 android:id="@+id/btnTakePhoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/verde_principal"
+                app:hintTextColor="@color/verde_principal"
                 android:text="Tomar fotografía"
                 android:backgroundTint="@color/verde_principal"
                 android:layout_marginTop="16dp"/>

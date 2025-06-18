@@ -7,10 +7,8 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 
-// Identifica el tipo de usuario una vez logueado
 enum class UserType { ADMIN, CLIENTE }
 
-// Resultado de login con tipo
 data class LoginResult(
     val isSuccess: Boolean,
     val userType: UserType? = null,
@@ -27,41 +25,80 @@ class LoginViewModel : ViewModel() {
 
     fun login(email: String, password: String) {
         if (email.isBlank() || password.isBlank()) {
-            _loginResult.value =
-                LoginResult(false, errorMessage = "Correo y contraseña son obligatorios")
+            _loginResult.value = LoginResult(
+                isSuccess = false,
+                errorMessage = "Correo y contraseña son obligatorios"
+            )
             return
         }
 
         auth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener { authResult ->
-                val uid = authResult.user?.uid ?: run {
-                    _loginResult.value =
-                        LoginResult(false, errorMessage = "UID inválido")
+            .addOnSuccessListener { authRes ->
+                val uid = authRes.user?.uid ?: run {
+                    _loginResult.value = LoginResult(false, errorMessage = "UID inválido")
                     return@addOnSuccessListener
                 }
 
-                // Primero revisamos si es admin
+                // Verificar administrador
                 db.collection("admins").document(uid).get()
                     .addOnSuccessListener { docAdmin ->
                         if (docAdmin.exists()) {
-                            _loginResult.value = LoginResult(
-                                true,
-                                userType = UserType.ADMIN,
-                                profileData = docAdmin.data
-                            )
+                            val deleted = docAdmin.getBoolean("deleted") ?: false
+                            if (deleted) {
+                                auth.signOut()
+                                _loginResult.value = LoginResult(
+                                    isSuccess = false,
+                                    errorMessage = "Cuenta de administrador eliminada"
+                                )
+                            } else {
+                                _loginResult.value = LoginResult(
+                                    isSuccess = true,
+                                    userType = UserType.ADMIN,
+                                    profileData = docAdmin.data
+                                )
+                            }
                         } else {
-                            // Luego revisamos clientes
+                            // Verificar cliente
                             db.collection("clientes").document(uid).get()
-                                .addOnSuccessListener { docCliente ->
-                                    if (docCliente.exists()) {
+                                .addOnSuccessListener { docCli ->
+                                    if (docCli.exists()) {
+                                        val deleted = docCli.getBoolean("deleted") ?: false
+                                        if (deleted) {
+                                            auth.signOut()
+                                            _loginResult.value = LoginResult(
+                                                isSuccess = false,
+                                                errorMessage = "Cuenta de cliente eliminada"
+                                            )
+                                        } else {
+                                            _loginResult.value = LoginResult(
+                                                isSuccess = true,
+                                                userType = UserType.CLIENTE,
+                                                profileData = docCli.data
+                                            )
+                                        }
+                                    } else {
+                                        auth.signOut()
                                         _loginResult.value = LoginResult(
-                                            true,
-                                            userType = UserType.CLIENTE,
-                                            profileData = docCliente.data
+                                            isSuccess = false,
+                                            errorMessage = "Usuario no encontrado"
                                         )
                                     }
                                 }
+                                .addOnFailureListener { e ->
+                                    auth.signOut()
+                                    _loginResult.value = LoginResult(
+                                        isSuccess = false,
+                                        errorMessage = e.localizedMessage
+                                    )
+                                }
                         }
+                    }
+                    .addOnFailureListener { e ->
+                        auth.signOut()
+                        _loginResult.value = LoginResult(
+                            isSuccess = false,
+                            errorMessage = e.localizedMessage
+                        )
                     }
             }
             .addOnFailureListener { e ->
@@ -69,15 +106,15 @@ class LoginViewModel : ViewModel() {
                 val msg = when (e) {
                     is FirebaseAuthInvalidUserException ->
                         when (e.errorCode) {
-                            "ERROR_USER_NOT_FOUND"   -> "No existe una cuenta con este correo."
-                            "ERROR_USER_DISABLED"    -> "La cuenta ha sido desactivada."
-                            else                     -> "Usuario inválido."
+                            "ERROR_USER_NOT_FOUND" -> "No existe una cuenta con este correo."
+                            "ERROR_USER_DISABLED"  -> "La cuenta ha sido desactivada."
+                            else                   -> "Usuario inválido."
                         }
                     is FirebaseAuthInvalidCredentialsException ->
                         when (e.errorCode) {
-                            "ERROR_WRONG_PASSWORD"   -> "Contraseña incorrecta."
-                            "ERROR_INVALID_EMAIL"    -> "Formato de correo inválido."
-                            else                     -> "El correo o contraseña es incorrecto."
+                            "ERROR_WRONG_PASSWORD" -> "Contraseña incorrecta."
+                            "ERROR_INVALID_EMAIL"  -> "Formato de correo inválido."
+                            else                   -> "El correo o contraseña es incorrecto."
                         }
                     is FirebaseNetworkException ->
                         "Error de red. Verifica tu conexión."
