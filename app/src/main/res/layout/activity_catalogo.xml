@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/button_round"
         android:padding="10dp"
         android:scaleType="centerCrop"
@@ -96,7 +96,9 @@
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.947"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewRandom"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnSort"
@@ -123,87 +125,199 @@
         app:layout_constraintTop_toBottomOf="@+id/cardViewRandom" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:id="@+id/cdFiltroRiegoBajo"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="0.033"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" >
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+        <ImageButton
+            android:id="@+id/btnFiltroRiegoBajo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/iconc_bajor" />
+    </androidx.cardview.widget.CardView>
 
-            <ImageButton
-                android:layout_marginStart="0dp"
-                android:id="@+id/btnFiltroRiegoBajo"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/iconc_bajor"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter" />
-            <ImageButton
-                android:layout_marginStart="20dp"
-                android:id="@+id/btnFiltroRiegoAlto"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/iconc_altor"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter" />
-            <ImageButton
-                android:layout_marginStart="20dp"
-                android:id="@+id/btnFiltroExterior"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/iconb_exterior"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter" />
-            <ImageButton
-                android:layout_marginStart="20dp"
-                android:id="@+id/btnFiltroInterior"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/iconb_interior"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter" />
-            <ImageButton
-                android:layout_marginStart="20dp"
-                android:id="@+id/btnFiltroSol"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/icona_sol"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter" />
-            <ImageButton
-                android:layout_marginStart="20dp"
-                android:id="@+id/btnFiltroSombra"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/icona_sombra"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter" />
-            <ImageButton
-                android:layout_marginStart="20dp"
-                android:id="@+id/btnFiltroSombraParcial"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/icona_solysombra"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cdFiltroRiegoAlto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.033"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cdFiltroRiegoBajo">
 
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/btnFiltroRiegoAlto"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/iconc_altor" />
+    </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cdFiltroInterior"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.063"
+
+        app:layout_constraintStart_toEndOf="@+id/cdFiltroRiegoBajo"
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+        <ImageButton
+            android:id="@+id/btnFiltroInterior"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/iconb_interior" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cdFiltroExterior"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.063"
+
+        app:layout_constraintStart_toEndOf="@+id/cdFiltroRiegoAlto"
+        app:layout_constraintTop_toBottomOf="@+id/cdFiltroInterior">
+
+        <ImageButton
+            android:id="@+id/btnFiltroExterior"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/iconb_exterior" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cdFiltroSol"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+
+        app:layout_constraintStart_toEndOf="@+id/cdFiltroInterior"
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+        <ImageButton
+            android:id="@+id/btnFiltroSol"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icona_sol" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cdFiltroSombra"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+
+        app:layout_constraintStart_toEndOf="@+id/cdFiltroExterior"
+        app:layout_constraintTop_toBottomOf="@+id/cdFiltroSol">
+
+        <ImageButton
+            android:id="@+id/btnFiltroSombra"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icona_sombra" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cdFiltroSolySombra"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.145"
+
+        app:layout_constraintStart_toEndOf="@+id/cdFiltroSol"
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+        <ImageButton
+            android:id="@+id/btnFiltroSolySombra"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icona_solysombra" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cdFiltroLimpiar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.145"
+
+        app:layout_constraintStart_toEndOf="@+id/cdFiltroSombra"
+        app:layout_constraintTop_toBottomOf="@+id/cdFiltroSolySombra">
+
+        <ImageButton
+            android:id="@+id/btnFiltroLimpiar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/limpiador" />
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="412dp"
-        android:layout_height="320dp"
+        android:layout_height="280dp"
         android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
