@@ -55,6 +55,10 @@ class PerfilActivity : AppCompatActivity() {
         setupListeners()
         setupNavBar()
 
+        binding.btnRegisterAdmin.setOnClickListener {
+            startActivity(Intent(this, RegistroAdminActivity::class.java))
+        }
+
 
     }
 
@@ -211,10 +215,12 @@ class PerfilActivity : AppCompatActivity() {
             binding.barraAdmin.visibility = View.VISIBLE
             binding.barraAdmin.selectedItemId = R.id.nav_perfil
             binding.barraCliente.visibility = View.INVISIBLE
+            binding.btnRegisterAdmin.visibility = View.VISIBLE
         } else {
             binding.barraCliente.visibility = View.VISIBLE
             binding.barraCliente.selectedItemId = R.id.nav_perfil
             binding.barraAdmin.visibility = View.INVISIBLE
+            binding.btnRegisterAdmin.visibility = View.GONE
         }
         binding.barraCliente.setOnItemSelectedListener { item ->
             when (item.itemId) {

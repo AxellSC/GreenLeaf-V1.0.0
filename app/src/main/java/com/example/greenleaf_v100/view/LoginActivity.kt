@@ -47,9 +47,6 @@ class LoginActivity : AppCompatActivity() {
             viewModel.login(email, pass)
         }
 
-        binding.btnRegisterAdmin.setOnClickListener {
-            startActivity(Intent(this, RegistroAdminActivity::class.java))
-        }
 
         binding.tvRegisterClient.setOnClickListener {
             startActivity(Intent(this, RegistroClientesActivity::class.java))

@@ -92,15 +92,6 @@
                 android:textColor="@color/white"
                 android:backgroundTint="@color/verde_principal" />
 
-            <!-- Registrar Administrador -->
-            <Button
-                android:id="@+id/btnRegisterAdmin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/verde_principal"
-                android:text="Registrar administrador"
-                android:textColor="@color/white"
-                android:layout_marginTop="8dp" />
 
             <!-- Registro Cliente -->
             <TextView

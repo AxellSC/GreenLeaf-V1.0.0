@@ -74,7 +74,7 @@ class RegistroAdminActivity : AppCompatActivity() {
         }
 
         binding.btnBackToLoginAdmin.setOnClickListener {
-            finish() // vuelve al login
+            finish() // vuelve atras
         }
     }
 

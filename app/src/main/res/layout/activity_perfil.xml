@@ -18,7 +18,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="500dp">
 
             <!-- Foto de perfil -->
             <com.google.android.material.imageview.ShapeableImageView
@@ -396,20 +396,20 @@
                 app:layout_constraintTop_toBottomOf="@id/tvDomicilioFiscal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="14dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cerrar sesión"
-                app:layout_constraintTop_toBottomOf="@id/dividerCerrar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="@color/verde_principal"
-                android:textColor="@color/white"/>
+                android:text="Cerrar sesión"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dividerCerrar" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDeleteAccount"
@@ -423,6 +423,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="50dp"/>
+
+            <!-- Registrar Administrador -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRegisterAdmin"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Añadir Administrador"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnDeleteAccount" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

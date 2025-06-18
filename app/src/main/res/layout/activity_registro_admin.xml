@@ -195,9 +195,9 @@
                 android:id="@+id/btnBackToLoginAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Volver al Login"
+                android:text="Cancelar"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/verde_principal"/>
+                android:backgroundTint="@color/red"/>
 
         </LinearLayout>
     </ScrollView>
