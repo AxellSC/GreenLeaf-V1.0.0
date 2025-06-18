@@ -12,6 +12,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -437,38 +438,89 @@ class CatalogoActivity : AppCompatActivity() {
     }
 
     private fun setupFiltros() {
+
         binding.btnFiltroRiegoBajo.setOnClickListener {
+            resetearColoresFiltros()
+            binding.cdFiltroRiegoBajo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.greenA))
             val filtradas = plantasListFull.filter { it.riego.equals("bajo", ignoreCase = true) }
-            adapter.actualizarLista(filtradas)
+            plantasList.clear()
+            plantasList.addAll(filtradas)
+            adapter.notifyDataSetChanged()
+
         }
 
         binding.btnFiltroRiegoAlto.setOnClickListener {
+            resetearColoresFiltros()
+            binding.cdFiltroRiegoAlto.setCardBackgroundColor(ContextCompat.getColor(this, R.color.greenA))
             val filtradas = plantasListFull.filter { it.riego.equals("alto", ignoreCase = true) }
-            adapter.actualizarLista(filtradas)
+            plantasList.clear()
+            plantasList.addAll(filtradas)
+            adapter.notifyDataSetChanged()
         }
 
         binding.btnFiltroInterior.setOnClickListener {
+            resetearColoresFiltros()
+            binding.cdFiltroInterior.setCardBackgroundColor(ContextCompat.getColor(this, R.color.greenA))
             val filtradas = plantasListFull.filter { it.estancia.equals("interior", ignoreCase = true) }
-            adapter.actualizarLista(filtradas)
+            plantasList.clear()
+            plantasList.addAll(filtradas)
+            adapter.notifyDataSetChanged()
         }
 
         binding.btnFiltroExterior.setOnClickListener {
+            resetearColoresFiltros()
+            binding.cdFiltroExterior.setCardBackgroundColor(ContextCompat.getColor(this, R.color.greenA))
             val filtradas = plantasListFull.filter { it.estancia.equals("exterior", ignoreCase = true) }
-            adapter.actualizarLista(filtradas)
+            plantasList.clear()
+            plantasList.addAll(filtradas)
+            adapter.notifyDataSetChanged()
         }
 
         binding.btnFiltroSol.setOnClickListener {
+            resetearColoresFiltros()
+            binding.cdFiltroSol.setCardBackgroundColor(ContextCompat.getColor(this, R.color.greenA))
             val filtradas = plantasListFull.filter { it.tipo.equals("sol", ignoreCase = true) }
-            adapter.actualizarLista(filtradas)
+            plantasList.clear()
+            plantasList.addAll(filtradas)
+            adapter.notifyDataSetChanged()
         }
         binding.btnFiltroSombra.setOnClickListener {
+            resetearColoresFiltros()
+            binding.cdFiltroSombra.setCardBackgroundColor(ContextCompat.getColor(this, R.color.greenA))
             val filtradas = plantasListFull.filter { it.tipo.equals("sombra", ignoreCase = true) }
-            adapter.actualizarLista(filtradas)
+            plantasList.clear()
+            plantasList.addAll(filtradas)
+            adapter.notifyDataSetChanged()
         }
-        binding.btnFiltroSombra.setOnClickListener {
+        binding.btnFiltroSolySombra.setOnClickListener {
+            resetearColoresFiltros()
+            binding.cdFiltroSolySombra.setCardBackgroundColor(ContextCompat.getColor(this, R.color.greenA))
             val filtradas = plantasListFull.filter { it.tipo.equals("sombra parcial", ignoreCase = true) }
-            adapter.actualizarLista(filtradas)
+            plantasList.clear()
+            plantasList.addAll(filtradas)
+            adapter.notifyDataSetChanged()
         }
+        binding.btnFiltroLimpiar.setOnClickListener {
+            resetearColoresFiltros()
+            binding.cdFiltroLimpiar.setCardBackgroundColor(ContextCompat.getColor(this, R.color.greenA))
+
+            plantasList.clear()
+            plantasList.addAll(plantasListFull) // Restaura la lista de plantas
+            adapter.notifyDataSetChanged()
+            resetearColoresFiltros()
+        }
+    }
+
+    private fun resetearColoresFiltros() {
+        val blanco = ContextCompat.getColor(this, R.color.white)
+        binding.cdFiltroRiegoBajo.setCardBackgroundColor(blanco)
+        binding.cdFiltroRiegoAlto.setCardBackgroundColor(blanco)
+        binding.cdFiltroInterior.setCardBackgroundColor(blanco)
+        binding.cdFiltroExterior.setCardBackgroundColor(blanco)
+        binding.cdFiltroSol.setCardBackgroundColor(blanco)
+        binding.cdFiltroSombra.setCardBackgroundColor(blanco)
+        binding.cdFiltroSolySombra.setCardBackgroundColor(blanco)
+        binding.cdFiltroLimpiar.setCardBackgroundColor(blanco)
     }
 
 
