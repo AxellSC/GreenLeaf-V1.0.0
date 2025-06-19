@@ -240,16 +240,10 @@ class CatalogoActivity : AppCompatActivity() {
                         Glide.with(this).load(planta.fotoUrl).into(binding.ivPlantaC)
                     }
 
-                    binding.tvEmptyView.visibility = if (plantasList.isEmpty()) View.VISIBLE else View.GONE
+                    //binding.tvEmptyView.visibility = if (plantasList.isEmpty()) View.VISIBLE else View.GONE
                 }
-                .addOnFailureListener { exception ->
-                    binding.tvEmptyView.visibility = View.VISIBLE
-                    Toast.makeText(
-                        this,
-                        "Error al cargar plantas: ${exception.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+
+
         }.addOnFailureListener { exception ->
             Toast.makeText(this, "Error al cargar favoritos: ${exception.message}", Toast.LENGTH_SHORT).show()
         }

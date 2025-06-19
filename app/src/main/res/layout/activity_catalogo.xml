@@ -20,63 +20,79 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:clickable="true"
-        android:focusable="true">>
+        android:focusable="true">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvEmptyView"
-            android:layout_width="5dp"
-            android:layout_height="7dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="68dp"
-            android:text="planta no encontrada"
-            android:textSize="20dp"
-            android:visibility="gone" />
+            <ImageView
+                android:id="@+id/ivPlantaC"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginStart="16dp"
+                android:foregroundGravity="center"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.266" />
 
-        <ImageView
-            android:id="@+id/ivPlantaC"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="18dp"
-            android:foregroundGravity="center"
-            android:scaleType="centerCrop" />
+            <TextView
+                android:id="@+id/tvNombrePC"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Planta"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.52"
+                app:layout_constraintStart_toEndOf="@+id/ivPlantaC"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/tvNombrePC"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="178dp"
-            android:layout_marginTop="18dp"
-            android:layout_height="wrap_content"
-            android:text="Planta"
-            android:textColor="@color/white"
-            android:textSize="33sp"
-            android:textStyle="bold">
-        </TextView>
 
-        <TextView
-            android:id="@+id/tvDescripcionC"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="178dp"
-            android:layout_marginTop="97dp"
-            android:layout_height="wrap_content"
-            android:text="Descripcion"
-            android:textColor="@color/grayBackground"
-            android:textSize="15sp"
-            android:textStyle="normal">
-        </TextView>
+            <TextView
+                android:id="@+id/tvDescripcionC"
+                android:layout_width="203dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="Descripcion"
+                android:textColor="@color/grayBackground"
+                android:textSize="15sp"
 
-        <TextView
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="145dp"
-            android:text="¡Consiguelo aquí!"
-            android:textColor="@color/green"
-            android:textSize="27sp"
-            android:textStyle="bold">
+                app:layout_constraintHorizontal_bias="0.931"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.57" />
 
-        </TextView>
+            <TextView
+
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="¡Consiguelo aquí!"
+                android:textColor="@color/green"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.071"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
@@ -316,11 +332,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="412dp"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="280dp"
         android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/barraCliente"
